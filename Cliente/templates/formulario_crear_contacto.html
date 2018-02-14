@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+{% block contenido %}
+
+
+	
+ <div class="col-md-12">
+
+			<legend>Crear Contacto</legend>
+                
+                
+                {% if messages %}
+	                <ul class="messages">
+					    {% for message in messages %}
+					    <!--<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
+					    <div class="alert alert-danger"> {{ message }} </div>
+					    {% endfor %}
+					</ul>
+                {% endif %}
+                
+
+                    <div class="panel-body">
+					    <div class="row">
+						
+							<form role="form" enctype="multipart/form-data" action="{% url 'cliente:crear_contacto' cliente.nit %}" data-toggle="validator" 
+							method="POST" name="form_crear_usuario" class="form-horizontal">{% csrf_token %}
+								
+								<div class="col-md-9 ui-sortable form-horizontal">
+									
+									<div class="form-group">
+										<label for="inputName" class="col-md-4 control-label">Nombre</label>
+										<div class="col-md-8">
+											<input type="text" maxlength="40" class="form-control"  name= "nombre" id="nombre" placeholder="Nombre" required>
+										</div>	
+									</div>
+													
+									<div class="form-group">
+										<label for="inputName" class="col-md-4 control-label">Correo</label>
+										<div class="col-md-8">
+											<input type="text" maxlength="40" class="form-control"  name= "correo" id="correo" placeholder="Nombre" required>
+										</div>	
+									</div>
+									
+									<div class="form-group">
+										<label for="inputName" class="col-md-4 control-label">Telefono</label>
+										<div class="col-md-8">
+											<input type="text" pattern="\d*" maxlength="10" class="form-control"  id="telefono"  name= "telefono" placeholder="Telefono" required>
+										</div>	
+									</div>
+									
+									<div class="form-group">
+										<label for="inputName" class="col-md-4 control-label">Extension</label>
+										<div class="col-md-8">
+											<input type="text" pattern="\d*" maxlength="10" class="form-control" id="extension" name= "extension" placeholder="Telefono" required>
+										</div>	
+									</div>
+									
+									<div class="form-group">
+										<label for="inputName" class="col-md-4 control-label">Celular</label>
+										<div class="col-md-8">
+											<input type="text" pattern="\d*" maxlength="10" class="form-control" id="celular"   name= "celular" placeholder="Telefono" required>
+										</div>	
+									</div>
+									
+									<div class="form-group">
+										<label for="inputName" class="col-md-4 control-label">Cargo</label>
+										<div class="col-md-8">
+											<input type="text" maxlength="20" class="form-control" id="cargo" name= "cargo"  placeholder="Nombre" required>
+										</div>	
+									</div>
+			
+									<br><br>
+						        	<div class="form-group">
+					                    <div class="col-md-8 col-md-offset-7">
+					                        <button type="submit" class="btn btn-primary">Crear Contacto</button>
+					                    </div>
+			                    	</div>
+								</div>
+							</form>
+
+						</div>
+					</div>
+                </div>
+                
+                <script>
+               
+				$(document).ready(function(){
+				    $('form_crear_usuario').submit(function(event) { // o el id de tu formulario
+				        alert("Workssss hahah");
+				        if($('#{{form.primer_nombre.id_for_label}}').val() == 'lulu') {
+				            alert("El campo primer nombre NO puede ser vacio");
+				        }
+				    })
+				
+				})
+				</script>
+</div>
+
+{% endblock contenido %}
+
+{% block plugins %}
+
+
+	<script>
+			$(document).ready(function() {
+				
+				App.init();
+
+
+			});
+	</script>
+
+
+
+
+{% endblock plugins %}

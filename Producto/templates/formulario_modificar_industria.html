@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block css %}
+	<link href="{% static 'assets/plugins/select2/dist/css/select2.min.css' %}" rel="stylesheet" />
+{% endblock css %}
+
+{% block contenido %}
+<!-- ================== END PAGE LEVEL STYLE ================== -->
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="{% static 'js/eliminar-producto.js' %}"></script> 
+
+ <div class="col-md-12">
+     
+    <legend>Modificar Industria</legend>
+ 	<br>
+
+    {% if messages %}
+        <ul class="messages">
+		    {% for message in messages %}
+		    <!--<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
+		    <div class="alert alert-danger"> {{ message }} </div>
+		    {% endfor %}
+		</ul>
+    {% endif %}
+    
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="myModalLabel"> Desactivar Contacto</h4>
+      </div>
+      <div class="modal-body">
+        <p> ¿Realmente desea Eliminar el producto <span id="modal_name"></span>?</p>
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="{% url 'producto:eliminar_producto_industria' industria.id %}" id="frmDesactivarUsuario" name="frmDesactivarUsuario">
+            {% csrf_token %}
+            <input type="hidden" id="modal_codigoContacto" name="codigoContacto">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+        </form> 
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal end -->
+                
+	    <div class="panel-body">
+		    <div class="row">
+		    	
+		    	
+			
+				<form role="form" enctype="multipart/form-data" action="{% url 'producto:modificar_industria' industria.id %}" data-toggle="validator" 
+				method="POST" name="form_crear_categoria" class="form-horizontal">{% csrf_token %}
+				
+					<div class="col-md-9 ui-sortable">
+					    
+					    <div class="form-group">
+                  <label class="col-md-4 control-label">Imagen</label>
+                  <fieldset>
+                    <div >
+                      <div class="row fileupload-buttonbar">
+                        <div class="col-md-8">
+                          <span>
+                              <input type="file" style="position: relative;top:5px;left:15px;" name="imagen" id="imagen" accept="image/*">
+                          </span>                          
+                        </div>
+                    </div>
+                  </fieldset>
+              </div>
+			            
+						
+    					<div class="form-group">
+    						<label class="col-md-4 control-label">Nombre</label>
+    						<div class="col-md-8">
+    						    <input type="text" maxlength="50" class="form-control" id="nombre"  name= "nombre" value="{{ industria.nombre }}" placeholder="Nombre" required>
+    						</div>
+    					</div>
+						
+						
+						<div class="form-group">
+									<label class="control-label col-md-4">Agregar Productos</label>
+							<div class="col-md-8">
+							    <select class="multiple-select2 form-control js-example-basic-multiple" multiple="" tabindex="-1" aria-hidden="true" id="productos"  name= "productos">
+							        
+							            {% if lubricantes_industriales %}
+							            <optgroup label="Lubricantes Industriales">
+							            {% for producto in lubricantes_industriales %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if grasas %}
+							            <optgroup label="Grasas">
+							            {% for producto in grasas %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if aditivos %}
+							            <optgroup label="Aditivos">
+							            {% for producto in aditivos %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if soldadura_antorcha %}
+							            <optgroup label="Soldadura para Antorcha">
+							            {% for producto in soldadura_antorcha %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if soldadura_arco %}
+							            <optgroup label="Soldadura para Arco">
+							            {% for producto in soldadura_arco %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if soldadura_tig %}
+							            <optgroup label="Soldadura TIG">
+							            {% for producto in soldadura_tig %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if quimicos %}
+							            <optgroup label="Quimicos">
+							            {% for producto in quimicos %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if otros %}
+							            <optgroup label="Otros">
+							            {% for producto in otros %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+							     </select>
+                                
+            <br><br><br>      
+            <table id="data-table" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Grado Alimencio</th>  
+                        <th>Tipo</th>
+                        <th></th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in industria.productos.all %}
+	                    <tr>
+	                    	<td>
+	                    		{{producto.marca}} {{producto.referencia}} 
+                            </td>
+                            
+                            <td>
+	                    		{{producto.grado_alimenticio}}
+                            </td>
+                            
+                            <td>
+	                    		{{producto.tipo}}
+                            </td>
+                            
+                            <td>
+                              <a class="btn btn-danger desactivar"  href="#myModal" role="button" class="btn btn-danger desactivar" data-toggle="modal" id="{{producto.referencia}}" data-name="{{producto.marca}} {{producto.referencia}}" data-original-title="Desactivar Usuario" title="Desactivar usuario">Eliminar</a>
+                            </td>
+                        
+	                    </tr>
+	                    
+	                {% endfor %}
+                </tbody>
+            </table>
+							</div>
+						</div>
+						
+						<br><br>
+          	<div class="form-group">
+              <div class="col-md-8 col-md-offset-7">
+                  <button type="submit" class="btn btn-primary">Modificar Industria</button>
+              </div>
+					</div>
+				</form>
+	
+			</div>
+		</div>
+	</div>
+	
+	
+    
+
+</div>
+
+{% endblock contenido %}
+
+{% block plugins %}
+    
+    <script src="{% static 'assets/plugins/select2/dist/js/select2.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/select2/dist/js/i18n/es.js' %}"></script>
+
+	<script>
+			$(document).ready(function() {
+				
+				App.init();
+
+			});
+	</script>
+	
+	<script type="text/javascript">
+			$(".js-example-basic-multiple").select2();
+	</script>
+
+{% endblock plugins %}

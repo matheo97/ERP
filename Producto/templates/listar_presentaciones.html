@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block extrahead %}
+		<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+	<link href="{% static 'plugins/DataTables/media/css/dataTables.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Buttons/css/buttons.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/AutoFill/css/autoFill.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/ColReorder/css/colReorder.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/KeyTable/css/keyTable.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/RowReorder/css/rowReorder.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Select/css/select.bootstrap.min.css' %}" rel="stylesheet" />
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+	
+	<!--<script src = "{% static 'plugins/DataTables/media/js/jquery.dataTables.js' %}"></script>-->
+	<!--<script src="{% static 'plugins/jquery/jquery-1.9.1.min.js' %}"></script>-->
+
+	<!-- ================== END PAGE LEVEL STYLE ================== -->
+	
+
+{% endblock extrahead %}
+
+{% block contenido %}
+
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="{% static 'js/eliminar-presentacion.js' %}"></script> 
+
+<script>
+
+		
+	$(document).ready(function(){
+		"use strict";
+	});
+</script>
+
+<!--final de las funcionalidades con JS-->
+	
+   <div class="col-md-12">
+       <legend>Listado de Presentaciones {{cliente.razon_social}}</legend>
+       
+       {% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+				<li{% if message.tags %} class="alert alert-success"{% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+       
+    <div class="panel-body">
+    	
+    <!--Contenido encargado de las funcionalidades JS-->
+
+ 
+
+<!--Contenido encargado de las funcionalidades JS-->
+
+<!--Desactivar-->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="myModalLabel"> Desactivar Presentacion</h4>
+      </div>
+      <div class="modal-body">
+        <p> ¿Realmente desea Desactivar la presentacion <span id="modal_name"></span>?</p>
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="{% url 'producto:eliminar_presentacion' %}" id="frmDesactivarUsuario" name="frmDesactivarUsuario">
+            {% csrf_token %}
+            <input type="hidden" id="modal_codigoContacto" name="codigoContacto">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            <button type="submit" class="btn btn-danger">Desactivar</button>
+        </form> 
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal end -->
+
+<!--activar-->
+<div id="myModalActivar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="myModalLabel"> Activar Presentacion</h4>
+      </div>
+      <div class="modal-body">
+        <p> ¿Realmente desea Activar la presentacion <span id="nombre_presentacion"></span>?</p>
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="{% url 'producto:activar_presentacion' %}" id="frmActivarUsuario" name="frmActivarUsuario">
+            {% csrf_token %}
+            <input type="hidden" id="id_presentacion" name="codigoContacto">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            <button type="submit" class="btn btn-success">Activar</button>
+        </form> 
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal end -->
+
+    <div class="panel panel-default">
+    <div class="panel-body">
+ 		<div class="row">
+ 			
+        	<div class="row" style = "position: relative;left: 10px;">
+            	<a href="{% url 'producto:listar_productos' %}" class="btn btn-warning m-r-5"><i class="fa fa-arrow-left"></i> Ir Atras</a>
+            	<a href="{% url 'producto:crear_presentacion' producto.referencia %}" class="btn btn-success m-r-5"><i class="fa fa-address-book"></i> Crear Presentacion</a>
+        	</div>
+        	
+        	</br></br>
+            <div id="generar_tabla_usuarios"></div>
+           
+            <table id="data-table" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Unidades en Stock</th>
+                        <th>Unidades en cada Caja</th>
+                        <th>Contenido</th>
+                        <th>Disponibilidad</th>
+                        <th>Precio</th>
+                        <th></th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for presentacion in presentaciones %}
+	                    <tr>
+	                    	<td>
+	                    		{{producto.marca}} {{producto.referencia}}
+                            </td>
+                            
+                            <td>
+	                        	{{presentacion.unidades_en_stock}}
+                            </td>
+                            
+	                        <td>
+	                        	{{presentacion.numero_elementos}}
+                            </td>
+                            
+	                        <td>
+								{{presentacion.cantidad}} {{presentacion.tipo_cantidad}}
+	                        </td>
+	                        
+	                        <td>
+								{{presentacion.disponibilidad}}
+	                        </td>
+	                        
+	                        <td>
+								$ {{presentacion.precio}}
+	                        </td>
+	                        
+	                         <td>
+	                           {% if presentacion.disponible %}
+    	                         	<a class="btn btn-danger desactivar"  href="#myModal" role="button" class="btn btn-danger desactivar" data-toggle="modal" id="{{presentacion.id}}" data-name="seleccionada" data-original-title="Desactivar" title="Desactivar">Desactivar</a>
+    	                        	<a class="btn btn-primary" href="{% url 'producto:modificar_presentacion' presentacion.id %}">Editar</a>
+    	                        	<a class="btn btn-warning" href="{% url 'producto:carrito_presentacion' presentacion.id %}">Agregar a Facturacion</a>
+                             {% else %}
+                                <a  href="#myModalActivar" role="button" class="btn btn-success activar" data-toggle="modal" id="{{presentacion.id}}" data-name="seleccionada" data-original-title="Activar" title="Activar">Activar</a>
+    	                        	<a class="btn btn-primary" href="{% url 'producto:modificar_presentacion' presentacion.id %}">Editar</a>
+    	                        	<a class="btn btn-warning" href="{% url 'producto:carrito_presentacion' presentacion.id %}" style = "pointer-events: none;" disabled>Agregar a Facturacion</a>
+    	                       {% endif%} 	
+    	                        
+	                         </td>
+	                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="email-footer clearfix">
+                  <ul class="pagination pagination-sm m-t-0 m-b-0 pull-right">
+                    {% if paginator.has_prev %}
+                      <li><a href="?page={{ paginator.firstPage }}"><i class="fa fa-angle-double-left"></i></a></li>
+                      <li><a href="?page={{ paginator.prev_page }}"><i class="fa fa-angle-left"></i></a></li>
+                    {% else %}
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-left"></i></a></li>
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-left"></i></a></li>
+                    {% endif %}
+                    {% if paginator.has_next %}
+                      <li><a href="?page={{ paginator.next_page }}"><i class="fa fa-angle-right"></i></a></li>
+                      <li><a href="?page={{ paginator.pages }}"><i class="fa fa-angle-double-right"></i></a></li>
+                    {% else %}
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-right"></i></a></li>
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-right"></i></a></li>
+                    {% endif %}
+                  </ul>
+                  
+                  Página <{{paginator.page}} de {{paginator.pages}}>
+              </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+    $(document).ready(function() {
+    	
+    	App.init();
+    
+    
+    });
+</script>
+
+{% endblock contenido %}
+
+{% block plugins %}
+		
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	
+	<script src = "{% static 'plugins/DataTables/media/js/dataTables.bootstrap.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/jszip.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/pdfmake.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.print.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/AutoFill/js/dataTables.autoFill.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/ColReorder/js/dataTables.colReorder.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/KeyTable/js/dataTables.keyTable.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/RowReorder/js/dataTables.rowReorder.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Select/js/dataTables.select.min.js' %}"></script>
+	<script src = "{% static 'js/table-manage-combine.demo.min.js' %}"></script>
+	
+	
+	<!-- ================== END PAGE LEVEL JS ================== -->
+
+
+
+{% endblock plugins %}

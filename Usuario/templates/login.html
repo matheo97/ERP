@@ -1,0 +1,118 @@
+{% load bootstrap3 %}
+{% load static %}
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>Iniciar sesión</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' %}" rel="stylesheet">
+	<link href="{% static 'plugins/jquery-ui/themes/base/minified/jquery-ui.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/animate.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/style.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/style-responsive.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/theme/default.css' %}" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{% static 'plugins/pace/pace.min.js' %}" ></script>
+	<script src='https://www.google.com/recaptcha/api.js?data-callback=onCallback'></script>
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body class="pace-top">
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
+	<!-- end #page-loader -->
+	
+	<div class="login-cover">
+    <div class="login-cover-image"><img src="{% static 'img/login-bg/bg-1.jpg' %}" data-id="login-cover-image" alt="" /></div>
+	    <div class="login-cover-bg"></div>
+	</div>
+	<!-- begin #page-container -->
+	<div id="page-container" class="fade">
+	    <!-- begin login -->
+        <div class="login login-v2" data-pageload-addclass="animated fadeIn">
+            <!-- begin brand -->
+            <div class="login-header">
+                <div class="brand">
+                    <span class="logo"></span> Solteca Industrial S.A.S
+                </div>
+            </div>
+            <!-- end brand -->
+            <div class="login-content">
+            	{% if messages %}
+	                <ul class="messages">
+					    {% for message in messages %}
+					    <!--<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
+					    <li><div class="alert alert-danger"> {{ message }} </div></li>
+					    {% endfor %}
+					</ul>
+                {% endif %}
+                <form action="{% url 'usuario:iniciar_sesion' %}" method="POST" class="margin-bottom-0">{% csrf_token %}
+                    <div class="form-group m-b-20">
+                        <input type="text" name="username" class="form-control input-lg" placeholder="Nombre Usuario" required />
+                    </div>
+                    <div class="form-group m-b-20">
+                        <input type="password" name="password" class="form-control input-lg" placeholder="Password" required />
+                    </div>
+                    <div class="checkbox m-b-20">
+                        <label>
+                            <input type="checkbox" /> Recuerdame
+                        </label>
+                    </div>
+                    <div class="login-buttons">
+                        <button type="submit" class="btn btn-success btn-block btn-lg">Ingresar</button>
+                    </div>
+                    </br></br></br>
+                    <div class="form-group">
+                             <!--Replace data-sitekey with your own one, generated at https://www.google.com/recaptcha/admin -->
+                            <div class="g-recaptcha" data-callback="recaptcha_callback" data-sitekey="6LcTrxwUAAAAANkknyVHv8dTV4k5mRCKbIOQYIS8"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end login -->
+        
+        
+	</div>
+	<!-- end page container -->
+	
+	<!-- end page container -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{% static 'plugins/jquery/jquery-1.9.1.min.js' %}" ></script>
+	<script src="{% static 'plugins/jquery/jquery-migrate-1.1.0.min.js' %}" ></script>
+	<script src="{% static 'plugins/jquery-ui/ui/minified/jquery-ui.min.js' %}" ></script>
+	<script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}" ></script>
+	
+	<!--[if lt IE 9]>
+		<script src="{% static 'crossbrowserjs/html5shiv.js' %}" ></script>
+		<script src="{% static 'crossbrowserjs/respond.min.js' %}" ></script>
+		<script src="{% static 'crossbrowserjs/excanvas.min.js' %}" ></script>
+	<![endif]-->
+	<script src="{% static 'plugins/slimscroll/jquery.slimscroll.min.js' %}" ></script>
+	<script src="{% static 'plugins/jquery-cookie/jquery.cookie.js' %}" ></script>
+	<!-- ================== END BASE JS ================== -->
+	
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="{% static 'js/apps.min.js' %}" ></script>
+	<!-- ================== END PAGE LEVEL JS ================== -->
+
+	<script>
+		$(document).ready(function() {
+			App.init();
+			LoginV2.init();
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+
+	{% block extrahead %}
+	
+	{% endblock extrahead %}
+	
+
+	{% block contenido %}
+	
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script src="{% static 'plugins/pace/pace.min.js' %}" ></script>
+			
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<legend>Vista Previa de Factura</legend>
+			<!-- end page-header -->
+			
+			<!-- begin invoice -->
+			<div class="invoice">
+                <div class="invoice-company">
+                    <span class="pull-right hidden-print">
+                    <a href="{% url 'facturacion:generarFactura_pdf' factura.consecutivo %}" class="btn btn-sm btn-success m-b-10"><i class="fa fa-download m-r-5"></i> Exportar como PDF</a>
+                    <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-success m-b-10"><i class="fa fa-print m-r-5"></i> Imprimir</a>
+                    </span>
+                    Solteca Industrial, SAS
+                </div>
+                <div class="invoice-header">
+                    <div class="invoice-from">
+                        <small>de</small>
+                        <address class="m-t-5 m-b-5">
+                            <strong>Solteca Industrial, SAS.</strong><br />
+                            Calle 10 #1B-41<br />
+                            Jamundi, 764001<br />
+                            Telefono: (032) 592-4494<br />
+                        </address>
+                    </div>
+                    <div class="invoice-to">
+                        <small>para</small>
+                        <address class="m-t-5 m-b-5">
+                            <strong>{{ factura.cliente.razon_social}}</strong><br />
+                            {{ factura.cliente.direccion}}<br />
+                            {{ factura.cliente.ciudad}}<br />
+                            Telefono: {{ factura.cliente.telefono}}<br />
+                        </address>
+                    </div>
+                    <div class="invoice-date">
+                        <small>Factura</small>
+                        <div class="date m-t-5">{{ factura.fecha}}</div>
+                        <div class="invoice-detail">
+                            Consecutivo: #{{ factura.consecutivo}}<br />
+                            Venta de Productos
+                        </div>
+                    </div>
+                </div>
+                <div class="invoice-content">
+                    <div class="table-responsive">
+                        <table class="table table-invoice">
+                            <thead>
+                                <tr>
+                                    <th>DESCRIPCION PRODUCTO</th>
+                                    <th>CANTIDAD</th>
+                                    <th>VALOR UNITARIO</th>
+                                    <th>TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for presentacion in factura.presentaciones.all %}
+                                    <tr>
+                                        <td>
+                                            {{ presentacion.presentacion.producto.marca }} {{ presentacion.presentacion.producto.referencia }}<br />
+                                            <small>{{ presentacion.presentacion.descripcion}}</small>
+                                        </td>
+                                        <td>{{ presentacion.cantidad }}</td>
+                                        <td>${{ presentacion.precio_unidad }}</td>
+                                        <td>${{ presentacion.precio_total }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="invoice-price">
+                        <div class="invoice-price-left">
+                            <div class="invoice-price-row">
+                                <div class="sub-price">
+                                    <small>SUBTOTAL</small>
+                                    ${{factura.subtotal}}
+                                </div>
+                                <div class="sub-price">
+                                    <i class="fa fa-plus"></i>
+                                </div>
+                                <div class="sub-price">
+                                    <small>IVA (19%)</small>
+                                    ${{factura.iva}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="invoice-price-right">
+                            <small>TOTAL</small> ${{factura.total}}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="invoice-note">
+                    * La condicion de pago sera {{factura.condicion_pago}}<br />
+                    * La validez de la oferta sera {{factura.validez_oferta}}<br />
+                    * El tiempo de entrega sera {{factura.tiempo_entrega}}
+                </div>
+                <div class="invoice-footer text-muted">
+                    <p class="text-center m-b-5">
+                        GRACIAS POR TU COMPRA
+                    </p>
+                    <p class="text-center">
+                        <span class="m-r-10"><i class="fa fa-globe"></i> soltecaindustrial.com.co</span>
+                        <span class="m-r-10"><i class="fa fa-phone"></i> T:032-5924494</span>
+                        <span class="m-r-10"><i class="fa fa-envelope"></i> ventas@soltecaindustrial.co</span>
+                    </p>
+                </div>
+            </div>
+			<!-- end invoice -->
+		</div>
+		<!-- end #content -->
+	</div>
+	<!-- end page container -->
+	
+	<script>
+		$(document).ready(function() {
+			App.init();
+		});
+	</script>
+
+	
+	{% endblock contenido %}
+	
+    
+    {% block plugins %}
+    
+    <!-- ================== BEGIN BASE JS ================== -->
+	<script src="{% static 'plugins/jquery/jquery-1.9.1.min.js' %}" ></script>
+	<script src="{% static 'plugins/jquery/jquery-migrate-1.1.0.min.js' %}" ></script>
+	<script src="{% static 'plugins/jquery-ui/ui/minified/jquery-ui.min.js' %}" ></script>
+	<script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}" ></script>
+	
+	
+	<script src="{% static 'plugins/slimscroll/jquery.slimscroll.min.js' %}" ></script>
+	<script src="{% static 'plugins/jquery-cookie/jquery.cookie.js' %}" ></script>
+	<!-- ================== END BASE JS ================== -->
+	
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="{% static 'js/apps.min.js' %}" ></script>
+	<!-- ================== END PAGE LEVEL JS ================== -->
+    
+    {% endblock plugins %}

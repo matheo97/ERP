@@ -1,0 +1,106 @@
+{% load bootstrap3 %}
+{% load static %}
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>Coming Soon</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+		
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' %}" rel="stylesheet">
+	<link href="{% static 'plugins/jquery-ui/themes/base/minified/jquery-ui.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/animate.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/style.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/style-responsive.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/theme/default.css' %}" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN PAGE CSS STYLE ================== -->
+    <link href="{% static 'plugins/jquery.countdown/jquery.countdown.css' %}" rel="stylesheet" />
+    
+	<!-- ================== END PAGE CSS STYLE ================== -->
+</head>
+<body class="bg-white p-t-0">
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
+	<!-- end #page-loader -->
+	
+	<!-- begin #page-container -->
+	<div id="page-container" class="fade">
+	    <!-- begin coming-soon -->
+        <div class="coming-soon">
+            <div class="coming-soon-header">
+                <div class="bg-cover"></div>
+                <div class="brand">
+                    <span class="logo"></span> Solteca S.A.S.
+                </div>
+                <div class="timer">
+                    <div id="timer"></div>
+                </div>
+                <div class="desc">
+                    Nuestro sitio web esta casi terminado y ha sido construido desde cero! Gran numero de caracteristicas <br />y mejoras se vienen.
+                </div>
+            </div>
+            <div class="coming-soon-content">
+                <div class="desc">
+                    Pronto tendremos la <b>informacion</b> que solicita<br /> Registrese y sea el primero en verla cuando sea <b>publicada</b>.
+                </div>
+                <form role="form" enctype="multipart/form-data" action="{% url 'usuario:coming_soon' %}" data-toggle="validator" 
+				method="POST" name="form_crear_categoria" class="form-horizontal">{% csrf_token %}
+	                <div class="input-group">
+	                    <input name="correo" type="text" class="form-control" placeholder="Direccion Email" required/>
+	                    <div class="input-group-btn">
+	                        <button type="submit" class="btn btn-success">Notificame</button>
+	                    </div>
+	                </div>
+	            </form>
+                <p class="help-block m-b-25"><i>No hacemos Spam. Su email esta seguro con nosotros.</i></p>
+                <p>
+                    Siganos en 
+                    <a><i class="fa fa-twitter fa-fw"></i> Twitter</a> y 
+                    <a><i class="fa fa-facebook fa-fw"></i> Facebook</a>
+                </p>
+            </div>
+        </div>
+        <!-- end coming-soon -->
+        
+        
+	</div>
+	<!-- end page container -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{% static 'plugins/jquery/jquery-1.8.2.min.js' %}"></script>
+	<script src="{% static 'plugins/jquery-ui/ui/minified/jquery-ui.min.js' %}"></script>
+	<script src="{% static 'plugins/bootstrap-3.2.0/js/bootstrap.min.js' %}"></script>
+	<!--[if lt IE 9]>
+		<script src="assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="assets/crossbrowserjs/respond.min.js"></script>
+		<script src="assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="{% static 'plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+	<script src="{% static 'plugins/jquery-cookie/jquery.cookie.js' %}"></script>
+	<!-- ================== END BASE JS ================== -->
+	
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="{% static 'plugins/jquery.countdown/jquery.plugin.js' %}"></script>
+    <script src="{% static 'plugins/jquery.countdown/jquery.countdown.js' %}"></script>
+	<script src="{% static 'js/coming-soon.demo.min.js' %}"></script>
+	<script src="{% static 'js/apps.min.js' %}"></script>
+	<!-- ================== END PAGE LEVEL JS ================== -->
+
+	<script>
+		$(document).ready(function() {
+			App.init();
+			ComingSoon.init();
+		});
+	</script>
+</body>
+</html>

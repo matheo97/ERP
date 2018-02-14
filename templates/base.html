@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="es">
+<!--<![endif]-->
+<head>
+		
+	<meta charset="utf-8" />
+	<title>{% block titulo %}{% endblock %}</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="Entrenamiento" name="description" />
+	<meta content="Cedesoft" name="author" />
+	
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+	<link href="{% static 'plugins/jquery-ui/themes/base/minified/jquery-ui.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/animate.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/style.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/style-responsive.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/theme/default.css' %}" rel="stylesheet" id="theme" />
+	
+	{% block css %}
+	{% endblock css %}
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{% static 'plugins/pace/pace.min.js' %}"></script>
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body>
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
+	<!-- end #page-loader -->
+	
+	<!-- begin #page-container -->
+	<div id="page-container" class="page-container fade page-sidebar-fixed page-header-fixed">
+		<!-- begin #header -->
+		<div id="header" class="header navbar navbar-default navbar-fixed-top">
+			<!-- begin container-fluid -->
+			<div class="container-fluid">
+				<!-- begin mobile sidebar expand / collapse button -->
+				<div class="navbar-header">
+					<a href="{% url 'home' %}" class="navbar-brand"><span class="navbar-logo"></span> Solteca Industrial </a>
+					<button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<!-- end mobile sidebar expand / collapse button -->
+				
+				<!-- begin header navigation right AQUI VAN LOS PRODUCTOS -->
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown navbar-user">
+						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+							<img src="{% static 'img/user-13.jpg' %}" alt="" /> 
+							<span class="hidden-xs">{{ request.user.email }}</span> <b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu animated fadeInLeft">
+							<li class="arrow"></li>
+							<li><a href="{% url 'usuario:modificar_usuario' request.user.id %}">Editar Perfil</a></li>
+							<li><a href="{% url 'usuario:listar_usuarios' %}">Ver Perfil</a></li>
+							<li class="divider"></li>
+							<li><a href="{% url 'usuario:cerrar_sesion' %}">Cerrar Sesion</a></li>
+						</ul>
+					</li>
+				</ul>
+				<!-- end header navigation right -->
+			</div>
+			<!-- end container-fluid -->
+		</div>
+		<!-- end #header -->
+		
+		<!-- begin #sidebar -->
+		<div id="sidebar" class="sidebar">
+			<!-- begin sidebar scrollbar -->
+			<div data-scrollbar="true" data-height="100%">
+				<!-- begin sidebar user -->
+				<ul class="nav">
+					<li class="nav-profile">
+						<div class="image">
+							<a href="javascript:;"><img src="{% static 'img/user-13.jpg' %}" alt="" /></a>
+						</div>
+						<div class="info">
+							{{ request.user.first_name}} {{ request.user.last_name}}
+							<small>Gerente</small>
+						</div>
+					</li>
+				</ul>
+				<!-- end sidebar user -->
+				<!-- begin sidebar nav -->
+				<ul class="nav">
+					<li class="nav-header">Navigation</li>
+					{% include "menus/menu_base.html" %}
+					
+			        <!-- begin sidebar minify button -->
+					<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
+			        <!-- end sidebar minify button -->
+				</ul>
+				<!-- end sidebar nav -->
+			</div>
+			<!-- end sidebar scrollbar -->
+		</div>
+		<div class="sidebar-bg"></div>
+		<!-- end #sidebar -->
+		
+		<!-- begin #content -->
+		<div id="content" class="content">
+			<!-- begin breadcrumb -->
+			<ol style="visibility:hidden;" class="breadcrumb pull-right">
+				<li><a href="javascript:;">Home</a></li>
+				<li><a href="javascript:;">Page Options</a></li>
+				<li class="active">Blank Page</li>
+			</ol>
+			<!-- end breadcrumb -->
+			
+			<div class="row">
+			    <div class="col-md-12">
+                    <div class="panel panel-inverse">
+                        <div class="panel-heading">
+                            <div class="panel-heading-btn">
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                            <h4 class="panel-title" style="visibility:hidden;">Panel Title here</h4>
+                        </div>
+                        <div class="panel-body">
+                            {% block contenido %}
+                            {% endblock contenido %}
+                        </div>
+                    </div>
+			    </div>
+			</div>
+		</div>
+		<!-- end #content -->
+		
+		<!-- begin scroll to top btn -->
+		<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+		<!-- end scroll to top btn -->
+	</div>
+	<!-- end page container -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{% static 'plugins/jquery/jquery-1.9.1.min.js' %}"></script>
+	<script src="{% static 'plugins/jquery/jquery-migrate-1.1.0.min.js' %}"></script>
+	<script src="{% static 'plugins/jquery-ui/ui/minified/jquery-ui.min.js' %}"></script>
+	<script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+	<!--[if lt IE 9]>
+		<script src="{% static 'crossbrowserjs/html5shiv.js' %}"></script>
+		<script src="{% static 'crossbrowserjs/respond.min.js' %}"></script>
+		<script src="{% static 'crossbrowserjs/excanvas.min.js' %}"></script>
+	<![endif]-->
+	<script src="{% static 'plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+	<script src="{% static 'plugins/jquery-cookie/jquery.cookie.js' %}"></script>
+	<!-- ================== END BASE JS ================== -->
+	
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="{% static 'js/apps.min.js' %}"></script>
+	<!-- ================== END PAGE LEVEL JS ================== -->
+
+	
+	{% block plugins %}
+	{% endblock plugins %}
+</body>
+</html>

@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block extrahead %}
+		<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+	<link href="{% static 'plugins/DataTables/media/css/dataTables.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Buttons/css/buttons.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/AutoFill/css/autoFill.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/ColReorder/css/colReorder.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/KeyTable/css/keyTable.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/RowReorder/css/rowReorder.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Select/css/select.bootstrap.min.css' %}" rel="stylesheet" />
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+	
+	<!--<script src = "{% static 'plugins/DataTables/media/js/jquery.dataTables.js' %}"></script>-->
+	<!--<script src="{% static 'plugins/jquery/jquery-1.9.1.min.js' %}"></script>-->
+
+	<!-- ================== END PAGE LEVEL STYLE ================== -->
+	
+
+{% endblock extrahead %}
+
+{% block contenido %}
+
+<!--Contenido encargado de las funcionalidades JS-->
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="{% static 'js/eliminar-presentacion-cotizacion.js' %}"></script>
+<!--Contenido encargado de las funcionalidades JS-->
+
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="myModalLabel"> Desactivar Contacto</h4>
+      </div>
+      <div class="modal-body">
+        <p> ¿Realmente desea eliminar la presentacion <span id="modal_name"></span>?</p>
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="{% url 'facturacion:eliminar_presentacion_carrito' %}" id="frmDesactivarUsuario" name="frmDesactivarUsuario">
+            {% csrf_token %}
+            <input type="hidden" id="modal_codigoContacto" name="codigoContacto">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+        </form> 
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal end -->
+
+
+
+<!--final de las funcionalidades con JS-->
+	
+   <div class="col-md-12">
+       
+    <div class="panel-body">
+
+
+    <div class="panel panel-default">
+    <div class="panel-body">
+ 		<div class="row">
+            
+            <div id="generar_tabla_usuarios"></div>
+            
+            <form role="form" enctype="multipart/form-data" action="{% url 'facturacion:editar_factura' factura.consecutivo %}" data-toggle="validator" 
+            method="POST" name="form_crear_usuario" class="form-horizontal">{% csrf_token %}
+                
+                <div class="col-md-12 ui-sortable">
+					<div class="form-group">
+						<label for="inputName" class="control-label">Consecutivo Facturas DIAN</label>
+						<input type="text" maxlength="100" class="form-control" id="consecutivo"  name= "consecutivo" value = "{{ factura.consecutivo }}" placeholder="consecutivo" readonly="readonly" required>
+					</div>
+				</div>
+                <br><br>									
+                <table class="table" id="table1">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Contacto</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="active">
+                            <td>
+                                {{cliente.sigla}}
+                                <input type="hidden" name="cliente_id" value="{{cliente.nit}}" />
+                            </td>
+                            <td>
+                                {{contacto.nombre}}
+                                <input type="hidden" name="contacto_id" value="{{contacto.id}}" />
+                                <input type="hidden" id= "total2" name="total-input" value="{{ total }}" />
+    						    <input type="hidden" id="subtotalinput" name="sub" value="{{ subtotal }}" />
+    						    <input type="hidden" name="iva" id="iva2" value="{{ iva }}" />
+    						    
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                </br></br>
+                
+                
+                <div class="row">
+    	          	<div class="form-group col-md-2" style = "width: 30%;">
+    	                <label class="col-md-4 ">Condicion de Pago</label>
+    	                <div class="col-md-9">
+    	                    <select name="condicion_pago" class="form-control">
+    	                        <option>{{ factura.condicion_pago }}</option>
+    	                        <option>Inmediata</option>
+    	                        <option>30 Dias</option>
+    	                        <option>60 Dias</option>
+    	                        <option>90 Dias</option>
+    	                    </select>
+    	                </div>
+    	            </div>
+    	            <div class="form-group col-md-2" style = "width: 30%;">
+    	                <label class="col-md-4">Validez de Oferta</label>
+    	                <div class="col-md-9">
+    	                    <select name="validez_oferta" class="form-control">
+    	                        <option>{{ factura.validez_oferta }}</option>
+    	                        <option>Inmediata</option>
+    	                        <option>30 Dias</option>
+    	                        <option>60 Dias</option>
+    	                        <option>90 Dias</option>
+    	                    </select>
+    	                </div>
+    	            </div>
+    	            <div class="form-group col-md-2" style = "width: 30%;">
+    	                <label class="col-md-4 ">Tiempo de Entrega</label>
+    	                <div class="col-md-9">
+    	                    <select name="tiempo_entrega" class="form-control">
+                                <option>{{factura.tiempo_entrega}}</option>
+                                <option>Inmediata</option>
+    	                        <option>30 Dias</option>
+    	                        <option>60 Dias</option>
+    	                        <option>90 Dias</option>
+    	                    </select>
+    	                </div>
+    	            </div>
+    	        </div>
+    	        
+    	        <br><br><br>
+                
+                <div class="tabla-facturacion">
+                <table id="data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Cantidad</th>
+                            <th>Referencia</th>
+                            <th>Presentacion</th>
+                            <th>Valor Unitario</th>
+                            <th>Valor Total</th>
+                            <th></th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for presentacion in factura.presentaciones.all %}
+    	                    <tr name="fila">
+    	                    	<td>
+    								<input type="number"  class="form-control" name= "cantidad" value="{{ presentacion.cantidad }}" placeholder="1,2,3,4 unidades" required>                            
+    							</td>
+                                
+    	                        <td>
+    	                        	{{presentacion.presentacion.producto.marca}} {{presentacion.presentacion.producto.referencia}}
+    	                        	<input type="hidden" name="presentacion_id" value="{{ presentacion.presentacion.id }}" />
+                                </td>
+                                
+    	                        <td>
+    								{{presentacion.presentacion.numero_elementos}} {{presentacion.presentacion.empaque}} x {{presentacion.presentacion.cantidad}}{{presentacion.presentacion.tipo_cantidad}}
+    	                        </td>
+    	                        
+    	                        <td>
+    								<input type="number"  class="form-control" name= "precio_unidad" value="{{presentacion.precio_unidad}}" required>
+    	                        </td>
+    	                        
+    	                        <td name = "precio_total">
+    	                            <input type="hidden" name="precio_total" id="precio_total" value="{{ presentacion.precio_total }}" />
+    								{{presentacion.precio_total}}
+    	                        </td>
+    	                        
+    	                         <td>
+    	                         	<button class="btn btn-danger desactivar"  role="button" class="btn btn-danger desactivar" data-toggle="modal" id="{{presentacion.id}}" data-name="{{presentacion.producto.marca}} {{presentacion.producto.referencia}}" data-original-title="Desactivar Usuario" title="Desactivar usuario">Eliminar</button>
+    	                         </td>
+    	                    </tr>
+                        {% endfor %}
+                        <tr>
+                        	<td>
+    						</td>
+                            
+                            <td>
+                            </td>
+                            
+                            <td>
+                            </td>
+                            
+                            
+    						<th style = "visibility: hidden;">
+    						    HOLI
+    						</th>
+                            
+                            <td>
+                            </td>
+                            
+                             <td>
+                             </td>
+                        </tr>
+                        
+                        <tr>
+                        	<td>
+    						</td>
+                            
+                            <td>
+                            </td>
+                            
+                            <td>
+                            </td>
+                            
+                            
+    						<th>Subtotal</th>
+                            
+                            
+                            <td name="sub_total">
+                            	{{ subtotal }}
+                            	
+                            </td>
+                            
+                             <td>
+                             </td>
+                        </tr>
+                        
+                        <tr>
+                        	<td>
+    						</td>
+                            
+                            <td>
+                            </td>
+                            
+                            <td>
+                            </td>
+                            
+                            
+    						<th>Iva 19%</th>
+                            
+                            
+                            <td name="iva_total">
+    							{{ iva }}
+                            </td>
+                            
+                             <td>
+                             	
+                             </td>
+                        </tr>
+                        
+                        <tr>
+                        	<td>
+    						</td>
+                            
+                            <td>
+                            </td>
+                            
+                            <td>
+                            </td>
+                            
+                            
+    						<th>Total</th>
+                            
+                            
+                            <td name="total">
+    							{{total}}
+    							
+                            </td>
+                            
+                             <td>
+                             </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                
+                </br></br></br>
+                
+                <center>
+                    <button type="submit" class="btn btn-primary">Editar Factura</button>
+                </center>
+             </div>   
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    $(document).ready(function() {
+    	
+    	App.init();
+    
+    
+    });
+</script>
+{% endblock contenido %}
+
+{% block plugins %}
+		
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	
+	<script src = "{% static 'plugins/DataTables/media/js/dataTables.bootstrap.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/jszip.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/pdfmake.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.print.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/AutoFill/js/dataTables.autoFill.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/ColReorder/js/dataTables.colReorder.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/KeyTable/js/dataTables.keyTable.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/RowReorder/js/dataTables.rowReorder.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Select/js/dataTables.select.min.js' %}"></script>
+	<script src = "{% static 'js/table-manage-combine.demo.min.js' %}"></script>
+	
+	
+	<!-- ================== END PAGE LEVEL JS ================== -->
+
+
+
+{% endblock plugins %}

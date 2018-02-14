@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block css %}
+		<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+	<link href="{% static 'plugins/DataTables/media/css/dataTables.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Buttons/css/buttons.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/AutoFill/css/autoFill.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/ColReorder/css/colReorder.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/KeyTable/css/keyTable.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/RowReorder/css/rowReorder.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Select/css/select.bootstrap.min.css' %}" rel="stylesheet" />
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+	
+	<!--<script src = "{% static 'plugins/DataTables/media/js/jquery.dataTables.js' %}"></script>-->
+	<!--<script src="{% static 'plugins/jquery/jquery-1.9.1.min.js' %}"></script>-->
+
+	<!-- ================== END PAGE LEVEL STYLE ================== -->
+	
+
+{% endblock css %}
+
+{% block contenido %}
+
+<!--Contenido encargado de las funcionalidades JS-->
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<!--Contenido encargado de las funcionalidades JS-->
+<script src="{% static 'js/desactivar_usuario.js' %}"></script>  
+<script src="{% static 'js/activar_usuario.js' %}"></script>  
+
+<script>
+
+		
+	$(document).ready(function(){
+		"use strict";
+	});
+</script>
+
+<!--final de las funcionalidades con JS-->
+	
+   <div class="col-md-12">
+   	    {% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+			<li{% if message.tags %} class="alert alert-danger"{% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+   	<legend>Listado de Clientes</legend>	
+       
+    <div class="panel-body">
+	
+
+    <div class="panel panel-default">
+    <div class="panel-body">
+ 		<div class="row">
+ 			
+ 			<form role="form" enctype="multipart/form-data" action="{% url 'cliente:buscar_cliente'  %}" data-toggle="validator" 
+			method="GET" name="form_crear_usuario" class="form-inline">{% csrf_token %}
+						
+                
+              	<div class="form-group">
+                    <label class="control-label" style = "font-size: large; display: block;text-align: left;">Departamento</label>
+                    
+                        <select name = "select_departamento" id = "select_departamento" class="form-control ">
+                            <option>Departamento</option>
+                            <option>Amazonas</option><option>Antioquia</option><option>Arauca</option><option>Atlantico</option>
+                            <option>Bolivar</option><option>Boyaca</option><option>Caldas</option><option>Caqueta</option>
+                            <option>Casanare</option><option>Cauca</option><option>Cesar</option><option>Choco</option>
+                            <option>Cordoba</option><option>Cundinamarca</option><option>Guainia</option><option>Guaviare</option>
+                            <option>Huila</option><option>La Guajira</option><option>Magdalena</option><option>Meta</option>
+                            <option>Narino</option><option>Norte de Santander</option><option>Putumayo</option><option>Quindio</option>
+    	                    <option>Risaralda</option><option>San Andres y Providencia</option><option>Santander</option><option>Sucre</option>
+                            <option>Tolima</option><option>Valle del Cauca</option><option>Vaupes</option><option>Vichada</option>
+                        </select>
+                    
+                </div>
+                
+                <div class="form-group" >
+                    <label class="control-label" style = "font-size: large; display: block;text-align: left;">Tipo</label>
+                    
+                        <select name = "select_tipo" id = "select_tipo" class="form-control">
+                            <option>Tipo</option>
+	                        <option>Impresion</option>
+	                        <option>Concreto</option>
+	                        <option>Mineria</option>
+	                        <option>Generacion de Energia</option>
+	                        <option>Alimentos y Bebidas</option>
+	                        <option>Marina</option>
+	                        <option>Acero</option>
+	                        <option>Viento</option>
+                        </select>
+                    
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label" style = "font-size: large; display: block;text-align: left;">Nombre</label>
+                    <input type="text" class="form-control" name = "nombre" id="nombre" placeholder="Ingresar Nombre" />
+                </div>
+                
+                <div class="form-group">
+                <div style="position: relative;top: 12px;left:40px;">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                </div>
+                </div>
+            
+        	</form>
+        	
+    		<br><br><br><br><br>
+    		
+            
+            <div id="generar_tabla_usuarios"></div>
+            
+            <table id="data-table" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sigla</th>
+                        <th>Telefono</th>
+                        <th>Direccion</th>
+                        <th>Tipo de Industria</th>
+                        <th></th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in posts %}
+	                    <tr>
+	                    	<td>
+	                    		{{cliente.sigla}} 
+                            </td>
+                            
+	                        <td>
+	                        	{{cliente.telefono}}
+                            </td>
+                            
+	                        <td>
+								{{cliente.direccion}}
+	                        </td>
+	                        
+	                        <td>
+								{{cliente.tipo}}
+	                        </td>
+	                         <td>
+	                         	<div class="input-group-btn">
+                                    <button type="button" class="btn btn-success">Opciones</button>
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{% url 'cliente:visualizar_cliente' cliente.nit %}">Ver Cliente</a></li>
+                                        <li><a href="{% url 'cliente:modificar_cliente' cliente.nit %}">Modificar Cliente</a></li>
+                                        <li><a href="{% url 'cliente:listar_contactos' cliente.nit %}">Listar Contactos</a></li>
+                                        <li><a href="{% url 'facturacion:listar_facturacion' cliente.nit %}">Documentos Comerciales</a></li>
+                                    </ul>
+                                </div>
+	                         </td>
+	                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="email-footer clearfix">
+                  <ul class="pagination pagination-sm m-t-0 m-b-0 pull-right">
+                    {% if paginator.has_prev %}
+                      <li><a href="?page={{ paginator.firstPage }}&departamento_re={{departamento}}&tipo_re={{tipo}}&nombre_re={{nombre}}"><i class="fa fa-angle-double-left"></i></a></li>
+                      <li><a href="?page={{ paginator.prev_page }}&departamento_re={{departamento}}&tipo_re={{tipo}}&nombre_re={{nombre}}"><i class="fa fa-angle-left"></i></a></li>
+                    {% else %}
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-left"></i></a></li>
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-left"></i></a></li>
+                    {% endif %}
+                    {% if paginator.has_next %}
+                      <li><a href="?page={{ paginator.next_page }}&departamento_re={{departamento}}&tipo_re={{tipo}}&nombre_re={{nombre}}"><i class="fa fa-angle-right"></i></a></li>
+                      <li><a href="?page={{ paginator.pages }}&departamento_re={{departamento}}&tipo_re={{tipo}}&nombre_re={{nombre}}"><i class="fa fa-angle-double-right"></i></a></li>
+                    {% else %}
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-right"></i></a></li>
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-right"></i></a></li>
+                    {% endif %}
+                  </ul>
+                  
+                  Página <{{paginator.page}} de {{paginator.pages}}>
+              </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+    $(document).ready(function() {
+    	
+    	App.init();
+    
+    
+    });
+</script>
+	
+
+{% endblock contenido %}
+
+{% block plugins %}
+
+	
+	
+		
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	
+	<script src = "{% static 'plugins/DataTables/media/js/dataTables.bootstrap.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/jszip.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/pdfmake.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.print.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/AutoFill/js/dataTables.autoFill.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/ColReorder/js/dataTables.colReorder.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/KeyTable/js/dataTables.keyTable.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/RowReorder/js/dataTables.rowReorder.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Select/js/dataTables.select.min.js' %}"></script>
+	<script src = "{% static 'js/table-manage-combine.demo.min.js' %}"></script>
+	
+	
+	<!-- ================== END PAGE LEVEL JS ================== -->
+
+
+
+{% endblock plugins %}

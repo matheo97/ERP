@@ -1,0 +1,86 @@
+
+<li class="has-sub">
+	<a href="javascript:;">
+	    <b class="caret pull-right"></b>
+	    <i class="fa fa-id-card"></i>
+	    <span>Clientes</span>
+    </a>
+	<ul class="sub-menu">
+	    <li><a href="{% url 'cliente:crear_cliente' %}">Crear Cliente</a></li>
+	    <li><a href="{% url 'cliente:listar_clientes' %}">Listar Cliente</a></li>
+	</ul>
+</li>
+
+<li class="has-sub">
+	<a href="javascript:;">
+	    <b class="caret pull-right"></b>
+	    <i class="fa fa-cogs" aria-hidden="true"></i>
+	    <span>Productos</span>
+	</a>
+	<ul class="sub-menu">
+		<li class="has-sub">
+		    <a href="javascript:;"><b class="caret pull-right"></b>Categorias</a>
+		    <ul class="sub-menu">
+		        <li><a href="{% url 'producto:crear_categoria' %}">Crear Categoria</a></li>
+		        <li><a href="{% url 'producto:listar_categorias' %}">Listar Categoria</a></li>
+		    </ul>
+		</li>
+		<li class="has-sub">
+		    <a href="javascript:;"><b class="caret pull-right"></b>Productos</a>
+		    <ul class="sub-menu">
+		        <li><a href="{% url 'producto:crear_producto' %}">Crear Producto</a></li>
+		        <li><a href="{% url 'producto:listar_productos' %}">Listar Productos</a></li>
+		    </ul>
+		</li>
+	</ul>
+</li>
+
+<li class="has-sub">
+	<a href="javascript:;">
+		<b class="caret pull-right"></b>
+		<i class="fa fa-building-o" aria-hidden="true"></i>
+		<span>Industria</span>
+	</a>
+	<ul class="sub-menu">
+	    <li><a href="{% url 'producto:crear_industria' %}">Crear Industria</a></li>
+	    <li><a href="{% url 'producto:listar_industrias' %}">Listar Industrias</a></li>
+	</ul>
+</li>
+
+<li class="has-sub">
+	<a href="javascript:;">
+		<b class="caret pull-right"></b>
+		<i class="fa fa-money" aria-hidden="true"></i>
+		<span>Facturacion</span>
+	</a>
+	<ul class="sub-menu">
+	    <li><a href="{% url 'facturacion:generar_cotizacion' %}">Crear Cotizacion</a></li>
+	    <li><a href="{% url 'facturacion:generar_remision' %}">Crear Remision</a></li>
+	    <li><a href="{% url 'facturacion:generar_factura' %}">Crear Factura</a></li>
+	</ul>
+</li>
+
+<li class="has-sub">
+	<a href="javascript:;">
+		<b class="caret pull-right"></b>
+		<i class="fa fa-plane" aria-hidden="true"></i>
+		<span>Demanda</span>
+	</a>
+	<ul class="sub-menu">
+	    <li><a href="{% url 'demanda:crear_aplicacion_futura' %}">Crear Aplicacion Futura</a></li>
+	    <li><a href="{% url 'demanda:mostrar_prediccion' %}">Mostrar Prediccion</a></li>
+	</ul>
+</li>
+
+<li class="has-sub">
+	<a href="javascript:;">
+		<b class="caret pull-right"></b>
+		<i class="fa fa-user-o" aria-hidden="true"></i>
+		<span>Gestion de Usuarios</span>
+	</a>
+	<ul class="sub-menu">
+	    <li><a href="{% url 'usuario:crear_usuario' %}">Crear Usuario</a></li>
+	    <li><a href="{% url 'usuario:listar_usuarios' %}">Listar Usuario</a></li>
+	    <li><a href="{% url 'usuario:cerrar_sesion' %}">Cerrar Sesion</a></li>
+	</ul>
+</li>

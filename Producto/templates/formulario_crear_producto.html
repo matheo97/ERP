@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+{% block contenido %}
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+<script>
+
+		
+	$(document).ready(function(){
+		"use strict";
+	});
+</script>
+
+<script>
+
+        
+        function cargarCategorias(selectTipo) { // catch the form's submit event
+                
+                var e = document.getElementById("tipo");
+				var tipo = e.options[e.selectedIndex].text;
+				
+                $.ajax({ // create an AJAX call...
+                data: tipo, // get the form data
+                type: 'get', // GET or POST
+                url: window.location.href + 'cargar_categoria', // the file to call
+                success: function(response) { // on success..
+                    if(response.status=="True"){
+	                    x = 0;
+	                    jQuery.each(response, function(i, val) {
+						  if(val != "True"){
+						  	selectTipo.categoria.options[x].text = val;
+						  	x++;
+						  }
+						});
+                    }
+                    else if(response.status=="Tipo"){
+	                    alert("Tipo no es una categoria Valida");
+	                }
+	                else{
+	                    alert("Hubo un error al cargar las categorias!");
+	                };
+                }
+            });
+            return false;
+        }
+    
+</script>
+	
+ <div class="col-md-12">
+ 	
+ 	<legend>Crear Producto</legend>
+ 	
+                {% if messages %}
+	                <ul class="messages">
+					    {% for message in messages %}
+					    <!--<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
+					    <div class="alert alert-danger"> {{ message }} </div>
+					    {% endfor %}
+					</ul>
+                {% endif %}
+                
+					
+                    <div class="panel-body">
+					    <div class="row">
+						
+							<form role="form" enctype="multipart/form-data" action="{% url 'producto:crear_producto' %}" data-toggle="validator" 
+							method="POST" name="form_crear_usuario" class="form-horizontal">{% csrf_token %}
+								
+								<div class="col-md-9 ui-sortable form-horizontal">
+									
+									<div class="form-group">
+										<label for="inputName" class="col-md-4 control-label">Referencia</label>
+										<div class="col-md-8">
+											<input type="text" maxlength="10" class="form-control" name= "referencia" id="referencia" placeholder="Referencia" required>
+										</div>	
+									</div>
+									
+									<div class="form-group">
+						                <label  class="col-md-4 control-label">Marca</label>
+						                <div class="col-md-8">
+						                    <select name="marca" id="marca" class="form-control input-sm">
+						                        <option>Omicron</option>
+						                        <option>Lubriplate</option>
+						                        <option>Interflon</option>
+						                    </select>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputName" class="col-md-4 control-label">Descripcion</label>
+										<div class="col-md-8">
+											<input type="text" maxlength="100" class="form-control" id="descripcion"  name= "descripcion" placeholder="Descripcion" required>
+										</div>	
+									</div>
+									
+									<div class="form-group">
+										<label for="inputName" class="col-md-4 control-label">Pronostico de Venta</label>
+										<div class="col-md-8">
+											<input type="text" pattern="\d*" maxlength="10" class="form-control" id="pronostico"   name= "pronostico" placeholder="Pronostico de Venta Inicial" required>
+										</div>	
+									</div>
+
+									
+						            <div class="form-group">
+						                <label class="col-md-4 control-label">Tipo</label>
+						                <div class="col-md-8">
+						                    <select name="tipo" id="tipo" onChange="cargarCategorias(this.form)" class="form-control">
+						                    	<option>Tipo</option>
+						                        <option>Lubricantes Industriales</option>
+						                        <option>Grasas</option>
+						                        <option>Aditivos</option>
+						                        <option>Soldadura para Antorcha</option>
+						                        <option>Soldadura para Arco</option>
+						                        <option>Soldadura TIG</option>
+						                        <option>Quimicos</option>
+						                        <option>Otros</option>
+						                    </select>
+						                </div>
+						            </div>
+							            
+						            <div class="form-group">
+						                <label class="col-md-4 control-label">Categoria</label>
+						                <div class="col-md-8">
+						                    <select name="categoria" class="form-control">
+						                        <option></option>
+						                        <option></option>
+						                        <option></option>
+						                        <option></option><option></option>
+						                        <option></option><option></option><option></option><option></option><option></option>
+						                    </select>
+						                </div>
+						            </div>
+							            
+						            <div class="form-group">
+						                <label class="col-md-4 control-label">Grado Alimenticio</label>
+						                <div class="col-md-8">
+						                    <select name="grado_alimenticio" class="form-control">
+						                        <option>Si</option>
+						                        <option>No</option>
+						                    </select>
+						                </div>
+						            </div>
+							        
+							        <!--<div class="form-group">-->
+			            <!--                <label class="col-md-4 control-label">Imagen</label>-->
+			            <!--                <fieldset>-->
+			            <!--                  <div >-->
+			            <!--                    <div class="row fileupload-buttonbar">-->
+			            <!--                      <div class="col-md-8">-->
+			            <!--                        <span>-->
+			            <!--                            <input type="file" style="position: relative;top:5px;left:15px;" name="imagen" id="imagen" accept="image/*" required>-->
+			            <!--                        </span>                          -->
+			            <!--                      </div>-->
+			            <!--                  </div>-->
+			            <!--                </fieldset>-->
+			            <!--            </div>-->
+				                    
+				                    
+				                    <div class="form-group">
+			                            <label class="col-md-4 control-label">Ficha Comercial</label>
+			                            <fieldset>
+			                              <div >
+			                                <div class="row fileupload-buttonbar">
+			                                  <div class="col-md-8">
+			                                    <span>
+			                                        <input type="file" style="position: relative;top:5px;left:15px;" name="ficha_comercial" id="ficha_comercial" accept="application/pdf" required>
+			                                    </span>                          
+			                                  </div>
+			                              </div>
+			                            </fieldset>
+			                        </div>
+			                        
+			                        <div class="form-group">
+			                            <label class="col-md-4 control-label">Ficha Comercial Litografias</label>
+			                            <fieldset>
+			                              <div >
+			                                <div class="row fileupload-buttonbar">
+			                                  <div class="col-md-8">
+			                                    <span>
+			                                        <input type="file" style="position: relative;top:5px;left:15px;" name="ficha_comercial_litografias" id="ficha_comercial_litografias" accept="application/pdf">
+			                                    </span>                          
+			                                  </div>
+			                              </div>
+			                            </fieldset>
+			                        </div>
+			                        
+			                        <div class="form-group">
+			                            <label class="col-md-4 control-label">Ficha Comercial Gruas</label>
+			                            <fieldset>
+			                              <div >
+			                                <div class="row fileupload-buttonbar">
+			                                  <div class="col-md-8">
+			                                    <span>
+			                                        <input type="file" style="position: relative;top:5px;left:15px;" name="ficha_comercial_gruas" id="ficha_comercial_gruas" accept="application/pdf">
+			                                    </span>                          
+			                                  </div>
+			                              </div>
+			                            </fieldset>
+			                        </div>
+			                        
+			                        <div class="form-group">
+			                            <label class="col-md-4 control-label">Ficha Comercial Alimentaria</label>
+			                            <fieldset>
+			                              <div >
+			                                <div class="row fileupload-buttonbar">
+			                                  <div class="col-md-8">
+			                                    <span>
+			                                        <input type="file" style="position: relative;top:5px;left:15px;" name="ficha_comercial_alimentaria" id="ficha_comercial_alimentaria" accept="application/pdf">
+			                                    </span>                          
+			                                  </div>
+			                              </div>
+			                            </fieldset>
+			                        </div>
+			                        
+			                        <div class="form-group">
+			                            <label class="col-md-4 control-label">Ficha Comercial Cementeras</label>
+			                            <fieldset>
+			                              <div >
+			                                <div class="row fileupload-buttonbar">
+			                                  <div class="col-md-8">
+			                                    <span>
+			                                        <input type="file" style="position: relative;top:5px;left:15px;" name="ficha_comercial_cementeras" id="ficha_comercial_cementeras" accept="application/pdf">
+			                                    </span>                          
+			                                  </div>
+			                              </div>
+			                            </fieldset>
+			                        </div>
+			                        
+			                        <div class="form-group">
+			                            <label class="col-md-4 control-label">Ficha Tecnica</label>
+			                            <fieldset>
+			                              <div >
+			                                <div class="row fileupload-buttonbar">
+			                                  <div class="col-md-8">
+			                                    <span>
+			                                        <input type="file" style="position: relative;top:5px;left:15px;" name="ficha_tecnica" id="ficha_tecnica" accept="application/pdf">
+			                                    </span>                          
+			                                  </div>
+			                              </div>
+			                            </fieldset>
+			                        </div>
+				                    
+				                   <div class="form-group">
+			                            <label class="col-md-4 control-label">Ficha Seguridad</label>
+			                            <fieldset>
+			                              <div >
+			                                <div class="row fileupload-buttonbar">
+			                                  <div class="col-md-8">
+			                                    <span>
+			                                        <input type="file" style="position: relative;top:5px;left:15px;" name="ficha_seguridad" id="ficha_seguridad" accept="application/pdf">
+			                                    </span>                          
+			                                  </div>
+			                              </div>
+			                            </fieldset>
+			                        </div>
+				                    
+						
+		                            <br><br>
+						        	<div class="form-group">
+                                    <div class="col-md-8 col-md-offset-7">
+                                        <button type="submit" class="btn btn-primary">Crear Producto</button>
+                                    </div>
+								</div>
+							</form>
+
+						</div>
+					</div>
+                </div>
+                
+                <script>
+               
+				$(document).ready(function(){
+				    $('form_crear_usuario').submit(function(event) { // o el id de tu formulario
+				        alert("Workssss hahah");
+				        if($('#{{form.primer_nombre.id_for_label}}').val() == 'lulu') {
+				            alert("El campo primer nombre NO puede ser vacio");
+				        }
+				    })
+				
+				})
+				</script>
+</div>
+
+{% endblock contenido %}
+
+{% block plugins %}
+
+
+	<script>
+			$(document).ready(function() {
+				
+				App.init();
+
+
+			});
+	</script>
+
+
+
+
+{% endblock plugins %}

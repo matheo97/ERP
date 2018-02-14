@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+
+{% block contenido %}
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="{% static 'js/eliminar-producto.js' %}"></script> 
+
+<script>
+		
+	$(document).ready(function(){
+		"use strict";
+	});
+</script>
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="myModalLabel"> Desactivar Producto</h4>
+      </div>
+      <div class="modal-body">
+        <p> ¿Realmente desea Desactivar el producto <span id="modal_name"></span>?</p>
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="{% url 'producto:eliminar_producto' %}" id="frmDesactivarUsuario" name="frmDesactivarUsuario">
+            {% csrf_token %}
+            <input type="hidden" id="modal_codigoContacto" name="codigoContacto">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            <button type="submit" class="btn btn-danger">Desactivar</button>
+        </form> 
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal end -->
+
+
+<legend>Listado de Productos</legend>
+
+<div class="row">
+  {% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+				<li{% if message.tags %} class="alert alert-danger"{% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+  </br></br>
+
+
+    <form role="form" enctype="multipart/form-data" action="{% url 'producto:filtrar_productos' %}" data-toggle="validator" 
+    method="GET" name="form_crear_usuario" class="form-inline" style="position:relative;left:5px">{% csrf_token %}
+    
+      <input type="hidden" id="tipoBusqueda" name="tipoBusqueda" value="categoria">
+      
+      <div class="form-group">
+          <label class="control-label" style = "font-size: large; display: block;text-align: left;">Tipo</label>
+          <select name="tipo" id="tipo2" onChange="cargarCategorias(this.form)" class="form-control">
+              <option>Todos</option>
+              <option>Lubricantes Industriales</option>
+              <option>Grasas</option>
+              <option>Aditivos</option>
+              <option>Soldadura para Antorcha</option>
+              <option>Soldadura para Arco</option>
+              <option>Soldadura TIG</option>
+              <option>Quimicos</option>
+              <option>Otros</option>
+          </select>
+      </div>
+      
+      
+      <div class="form-group">
+        <div style="position: relative;top: 12px;">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+        </div>
+      </div>
+      
+    </form>
+    
+    
+
+</br></br></br>
+<ul class="result-list">
+	
+	{% for producto in posts %}
+        
+            <li>
+                <div class="result-image">
+                    <a href="javascript:;"><img src="{% static producto.imagen.url %}" alt="" /></a>
+                </div>
+                <div class="result-info">
+                    <h4 class="title"><a href="javascript:;">{{producto.marca}} {{producto.referencia}}</a></h4>
+                    <p class="location">{{producto.categoria.nombre}}</p>
+                    <p class="desc" style="visibility:hidden;">
+                        Nunc et ornare ligula. Aenean commodo lectus turpis, eu laoreet risus lobortis quis. Suspendisse vehicula mollis magna vel aliquet. Donec ac tempor neque, convallis euismod mauris. Integer dictum dictum ipsum quis viverra.
+                    </p>
+                    <div class="btn-row">
+                        <a href="{% static producto.ficha_comercial.url %}" data-toggle="tooltip" data-container="body" data-title="Ficha Comercial"><i class="fa fa-fw fa fa-suitcase"></i></a>
+                        
+                        {% if producto.ficha_seguridad.url != "" %}
+                          <a href="{% static producto.ficha_seguridad.url %}" data-toggle="tooltip" data-container="body" data-title="Ficha Seguridad"><i class="fa fa-fw fa fa-lock"></i></a>
+                        {% endif %}
+                        
+                        {% if producto.ficha_tecnica.url != "" %}
+                          <a href="{% static producto.ficha_tecnica.url %}" data-toggle="tooltip" data-container="body" data-title="Ficha Tecnica"><i class="fa fa-fw fa-cog"></i></a>
+                        {% endif %}
+                        
+                        <!--#Industiras-->
+                        {% if producto.ficha_comercial_litografias.url != "" %}
+                          <a href="{% static producto.ficha_comercial_litografias.url %}" data-toggle="tooltip" data-container="body" data-title="Ficha Comercial Litografias"><i class="fa fa-fw fa-print"></i></a>
+                        {% endif %}
+                        
+                        {% if producto.ficha_comercial_cementeras.url != "" %}
+                          <a href="{% static producto.ficha_comercial_cementeras.url %}" data-toggle="tooltip" data-container="body" data-title="Ficha Comercial Cementeras"><i class="fa fa-fw fa-building"></i></a>
+                        {% endif %}
+                        
+                        {% if producto.ficha_comercial_gruas.url != "" %}
+                          <a href="{% static producto.ficha_comercial_gruas.url %}" data-toggle="tooltip" data-container="body" data-title="Ficha Comercial Gruas"><i class="fa fa-fw fa-truck"></i></a>
+                        {% endif %}
+                        
+                        {% if producto.ficha_comercial_alimentaria.url != "" %}
+                          <a href="{% static producto.ficha_comercial_alimentaria.url %}" data-toggle="tooltip" data-container="body" data-title="Ficha Comercial Alimentarias"><i class="fa fa-fw fa-cutlery"></i></a>
+                        {% endif %}
+                        
+                        
+                        
+                    </div>
+                </div>
+                
+                <div class="result-price">
+                    {% if producto.disponibilidad == "Si" %}
+                      <a class="btn btn-primary btn-inverse btn-block" href="{% url 'producto:listar_presentaciones' producto.referencia %}">Gestion Presentaciones</a>
+                      <a href="{% url 'producto:modificar_producto' producto.referencia %}" class="btn btn-inverse btn-block">Modificar</a>
+                      <a href="#myModal" role="button" class="btn btn-danger btn-block desactivar" data-toggle="modal" id="{{producto.referencia}}" data-name="{{producto.marca}} {{producto.referencia}}" data-original-title="Desactivar Usuario" title="Desactivar usuario">Desactivar</a>
+                    {% else %}
+                      <a href="{% url 'producto:activar_producto' producto.referencia %}" class="btn btn-success btn-block">Activar</a>
+                    {% endif %}
+                </div>
+            </li>
+                    
+	{% endfor %}
+	
+	<div class="email-footer clearfix">
+      <ul class="pagination pagination-sm m-t-0 m-b-0 pull-right">
+        {% if paginator.has_prev %}
+          <li><a href="?page={{ paginator.firstPage }}&tipo_re={{ tipo }}"><i class="fa fa-angle-double-left"></i></a></li>
+          <li><a href="?page={{ paginator.prev_page }}&tipo_re={{ tipo }}"><i class="fa fa-angle-left"></i></a></li>
+        {% else %}
+          <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-left"></i></a></li>
+          <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-left"></i></a></li>
+        {% endif %}
+        {% if paginator.has_next %}
+          <li><a href="?page={{ paginator.next_page }}&tipo_re={{ tipo }}"><i class="fa fa-angle-right"></i></a></li>
+          <li><a href="?page={{ paginator.pages }}&tipo_re={{ tipo }}"><i class="fa fa-angle-double-right"></i></a></li>
+        {% else %}
+          <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-right"></i></a></li>
+          <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-right"></i></a></li>
+        {% endif %}
+      </ul>
+      
+      Página <{{paginator.page}} de {{paginator.pages}}>
+  </div>
+	
+	<script>
+    $(document).ready(function() {
+    	
+    	App.init();
+    
+    
+    });
+</script>
+</ul>
+	
+
+{% endblock %}

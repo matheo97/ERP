@@ -1,0 +1,325 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | Solteca S.A.S</title>
+    <link href="{% static 'flat-template/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/prettyPhoto.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/main.css' %}" rel="stylesheet">
+    <!--<link href="{% static 'startOn/css/style.css' %}" rel="stylesheet">-->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="{% static 'flat-template/images/ico/favicon.ico' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'flat-template/images/ico/apple-touch-icon-144-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'flat-template/images/ico/apple-touch-icon-114-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'flat-template/images/ico/apple-touch-icon-72-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static 'flat-template/images/ico/apple-touch-icon-57-precomposed.png' %}">
+</head><!--/head-->
+<body>
+    <header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'flat-template/images/logo.png' %}" alt="logo"></a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'industria' %}">Industrias</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portafolio <i class="icon-angle-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'portafolio' 1 %}">Lubricantes Industriales</a></li>
+                            <li><a href="{% url 'portafolio' 2 %}">Grasas</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Aditivos</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Soldadura para Antorcha</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Soldadura para Arco</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Soldadura TIG</a></li>
+                            <li><a href="{% url 'portafolio' 7 %}">Quimicos</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Otros</a></li>
+                            <li><a href="{% url 'mostrar_grado_alimenticio' %}">Grado Alimenticio</a></li>
+                            <!--<li class="divider"></li>-->
+                            <!--<li><a href="privacy.html">Privacy Policy</a></li>-->
+                            <!--<li><a href="terms.html">Terms of Use</a></li>-->
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'videos' %}">Videos</a></li>
+                    <li><a href="{% url 'about-us' %}">Acerca de Nosotros</a></li>
+                    <li><a href="{% url 'contact-us' %}">Contacto</a></li>
+                    <li><a href="{% url 'usuario:iniciar_sesion' %}">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </header><!--/header-->
+    <section id="main-slider" class="no-margin">
+        <div class="carousel slide wet-asphalt">
+            <ol class="carousel-indicators">
+                <li data-target="#main-slider" data-slide-to="0" class="active"></li>
+                <li data-target="#main-slider" data-slide-to="1"></li>
+                <li data-target="#main-slider" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active" style="background-image: url('{% static 'flat-template/images/slider/industria34.jpg' %}')";>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="carousel-content centered">
+                                    <h2 class="boxed animation animated-item-1">Productos Especializados</h2></br>
+                                    <p class="boxed animation animated-item-2">Contamos con el mejor servicio, la mas avanzada asistencia técnica </br> y las mejores líneas de productos para el mantenimiento del mercado. </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->
+                <div class="item" style="background-image: url('{% static 'flat-template/images/slider/industria61.jpg' %}')";>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="carousel-content center centered">
+                                    <h2 class="boxed animation animated-item-1">Contamos con productos homologados por la USDA Y FDA</h2>
+                                    <p class="boxed animation animated-item-2">Garantizando y minimizando la posible contaminacion por contacto incidental en los procesos de las areas alimenticias y farmaceuticas.</p>
+                                    <br>
+                                    <a class="btn btn-md animation animated-item-3" href="{% url 'mostrar_grado_alimenticio' %}">Conozca Mas</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->
+                <div class="item" style="background-image: url('{% static 'flat-template/images/slider/industria2.jpg' %}')";>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content centered">
+                                    <h2 class="boxed animated-item-1">Evidencias y videos de aplicaciones de OMICRON</h2>
+                                    <p class="boxed animated-item-2">Se cuenta con multiples recursos multimedia para evidenciar la calidad de nuestros productos</p>
+                                    <a class="boxed btn btn-md animation animated-item-3" href="{% url 'videos' %}">Miralos Aqui!</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 hidden-xs animation animated-item-4">
+                                <div class="centered">
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+        <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+            <i class="icon-angle-left"></i>
+        </a>
+        <a class="next hidden-xs" href="#main-slider" data-slide="next">
+            <i class="icon-angle-right"></i>
+        </a>
+    </section><!--/#main-slider-->
+
+    <section id="services" class="emerald" style="padding: 50px 0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-pencil icon-md"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading">Entrenamiento</h3>
+                            <p>Ofrecemos programas de capacitación adaptados a sus necesidades. Estas sesiones de formación educativa se centran en todas las facetas de la lubricación de maquinaria.</p>
+                        </div>
+                    </div>
+                </div><!--/.col-md-4-->
+                <div class="col-md-4 col-sm-6">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-cogs icon-md"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading">Asistencia Tecnica</h3>
+                            <p>Contamos con personal profesional que asiste en campo asesorias del mas alto nivel en las areas de mantenimiento</p>
+                        </div>
+                    </div>
+                </div><!--/.col-md-4-->
+                <div class="col-md-4 col-sm-6">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="icon-desktop icon-md"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading">Software</h3>
+                            <p>Programa de software de computadora basado en Windows que pone toda su lubricación y horarios de mantenimiento a su alcance.</p>
+                        </div>
+                    </div>
+                </div><!--/.col-md-4-->
+            </div>
+        </div>
+    </section><!--/#services-->
+    
+    <section id="blog" class="container" style="padding: 50px 0">
+        <div class="row">
+            <div class= "col-sm-6"> 
+                <div class = "blog"> 
+                    <div class="blog-item">
+                        <img class="img-responsive img-blog" src="{% static 'flat-template/images/blog/lubricantesFull.jpg' %}" width="100%" alt="" />
+                        <div class="blog-content">
+                            <a href="{% url 'portafolio' 1 %}"><h3 style="font-weight: bold";>Lubricantes Industriales</h3></a>
+                            
+                        </div>
+                    </div><!--/.blog-item-->
+                    <div class="blog-item">
+                        <img class="img-responsive img-blog" src="{% static 'flat-template/images/blog/grasasFull.png' %}" width="100%" alt="" />
+                        <div class="blog-content">
+                            <a href="{% url 'portafolio' 2 %}"><h3 style="font-weight: bold";>Grasas</h3></a>
+                        </div>
+                    </div><!--/.blog-item-->
+                    <div class="blog-item">
+                        <img class="img-responsive img-blog" src="{% static 'flat-template/images/blog/aditivosFull.jpg' %}" width="100%" alt="" />
+                        <div class="blog-content">
+                            <a href="{% url 'usuario:coming_soon' %}"><h3 style="font-weight: bold";>Aditivos</h3></a>
+                        </div>
+                    </div><!--/.blog-item-->
+                    <div class="blog-item">
+                        <img class="img-responsive img-blog" src="{% static 'flat-template/images/blog/quimicosFull.jpg' %}" width="100%" alt="" />
+                        <div class="blog-content">
+                            <a href="{% url 'portafolio' 7 %}"><h3 style="font-weight: bold";>Quimicos</h3></a>
+                        </div>
+                    </div><!--/.blog-item-->
+                </div>
+            </div>
+            <div class= "col-sm-6">
+                 <div class = "blog"> 
+                    <div class="blog-item">
+                        <img class="img-responsive img-blog" src="{% static 'flat-template/images/blog/antorchaFull.jpg' %}" width="100%" alt="" />
+                        <div class="blog-content">
+                            <a href="{% url 'usuario:coming_soon' %}"><h3 style="font-weight: bold";>Soldadura para Antorcha</h3></a>
+                            
+                        </div>
+                    </div><!--/.blog-item-->
+                    <div class="blog-item">
+                        <img class="img-responsive img-blog" src="{% static 'flat-template/images/blog/soldaduraFull.jpg' %}" width="100%" alt="" />
+                        <div class="blog-content">
+                            <a href="{% url 'usuario:coming_soon' %}"><h3 style="font-weight: bold";>Soldadura para Arco</h3></a>
+                        </div>
+                    </div><!--/.blog-item-->
+                    <div class="blog-item">
+                        <img class="img-responsive img-blog" src="{% static 'flat-template/images/blog/tigFull.jpg' %}" width="100%" alt="" />
+                        <div class="blog-content">
+                            <a href="{% url 'usuario:coming_soon' %}"><h3 style="font-weight: bold";>Soldadura TIG</h3></a>
+                        </div>
+                    </div><!--/.blog-item-->
+                    <div class="blog-item">
+                        <img class="img-responsive img-blog" src="{% static 'flat-template/images/blog/iPetrolera.jpg' %}" width="100%" alt="" />
+                        <div class="blog-content">
+                            <a href="{% url 'usuario:coming_soon' %}"><h3 style="font-weight: bold";>Otros</h3></a>
+                        </div>
+                    </div><!--/.blog-item-->
+                </div>   
+            </div>
+        </div><!--/.row-->
+    </section><!--/#blog-->
+    
+    
+    <section id="testimonial" class="alizarin" style="padding: 50px 0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="center">
+                        <h2>Lo que nuestros clientes dicen</h2>
+                        <!--<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>-->
+                    </div>
+                    <div class="gap"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <blockquote>
+                                <p>Con la utilizacion de estos productos hemos obtenido excelentes resultados operativos, mejorando el redimiento y la productividad.</p>
+                                <small>Guillermo Caicedo <b>Ingenio Providencia S.A</b></small>
+                            </blockquote>
+                            <blockquote>
+                                <p>Con la implementacion de estos lubricantes hemos obtenido excelentes resultados de operacion, disminuyendo los consumos de energia, y maximizando la productividad.</p>
+                                <small>Liliana Daza <b>Unilever Andina Colombia LTDA.</b></small>
+                            </blockquote>
+                        </div>
+                        <div class="col-md-6">
+                            <blockquote>
+                                <p>El uso de estos productos ha producido buenos resultados de funcionamiento, rendimiento y equipos la productividad se ha mejorado y el consumo de energía ha disminuido. esta compañía tiene un buen apoyo técnico.</p>
+                                <small>Jaime Cardona <b>Manuelita S.A</b></small>
+                            </blockquote>
+                            <blockquote>
+                                <p>La implementacion de lubricantes LUBRIPLATE nos ha permitido alcanzar mejor rendimiento de las maquinas, lo que resulta en una mayor fiabilidad. </p>
+                                <small>Neftaly Rojas <b>Ingredion</b></small>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--/#testimonial-->
+    
+        <!-- Map -->
+    <section id="contact" class="map" height="500px">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.3783283428047!2d-76.53976268543931!3d3.255833353395972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMTUnMjEuMCJOIDc2wrAzMicxNS4zIlc!5e0!3m2!1sfr!2sco!4v1490940926913" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+        <br />
+        <small>
+            <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.3783283428047!2d-76.53976268543931!3d3.255833353395972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMTUnMjEuMCJOIDc2wrAzMicxNS4zIlc!5e0!3m2!1sfr!2sco!4v1490940926913" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></a>
+        </small>
+    </section>
+    
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2017 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                </div>
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'about-us' %}">Nosotros</a></li>
+                        <li><a href="{% url 'contact-us' %}">Contactenos</a></li>
+                        <li><a id="gototop" class="gototop" href="#"><i class="icon-chevron-up"></i></a></li><!--#gototop-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="{% static 'flat-template/js/jquery.js' %}"></script>
+    <script src="{% static 'flat-template/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'flat-template/js/jquery.prettyPhoto.js' %}"></script>
+    <script src="{% static 'flat-template/js/main.js' %}"></script>
+    
+    
+    <script>
+    // Disable Google Maps scrolling
+    // See http://stackoverflow.com/a/25904582/1607849
+    // Disable scroll zooming and bind back the click event
+    var onMapMouseleaveHandler = function(event) {
+        var that = $(this);
+        that.on('click', onMapClickHandler);
+        that.off('mouseleave', onMapMouseleaveHandler);
+        that.find('iframe').css("pointer-events", "none");
+    }
+    var onMapClickHandler = function(event) {
+            var that = $(this);
+            // Disable the click handler until the user leaves the map area
+            that.off('click', onMapClickHandler);
+            // Enable scrolling zoom
+            that.find('iframe').css("pointer-events", "auto");
+            // Handle the mouse leave event
+            that.on('mouseleave', onMapMouseleaveHandler);
+        }
+        // Enable map zooming with mouse scroll when the user clicks the map
+    $('.map').on('click', onMapClickHandler);
+    </script>
+</body>
+</html>

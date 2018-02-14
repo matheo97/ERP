@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block extrahead %}
+		<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+	<link href="{% static 'plugins/DataTables/media/css/dataTables.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Buttons/css/buttons.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/AutoFill/css/autoFill.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/ColReorder/css/colReorder.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/KeyTable/css/keyTable.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/RowReorder/css/rowReorder.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Select/css/select.bootstrap.min.css' %}" rel="stylesheet" />
+
+	<!-- ================== END PAGE LEVEL STYLE ================== -->
+{% endblock extrahead %}
+
+
+
+
+{% block contenido %}
+
+<script>
+
+		
+	$(document).ready(function(){
+		"use strict";
+
+       	$('#eliminar').on('click',function(e){
+			var url = $(this).attr('data-url');
+			$('#modal-eliminar').attr('href',url);
+		});
+		
+		
+		
+	});
+</script>
+
+<!--final de las funcionalidades con JS-->
+
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="myModalLabel"> Desactivar Usuario</h4>
+      </div>
+      <div class="modal-body">
+        <p> ¿Realmente desea Eliminar el Cliente <span id="modal_name"></span>?</p>
+      </div>
+      <div class="modal-footer">
+        <form method="POST" enctype="multipart/form-data" action="" id="frmDesactivarUsuario" name="frmDesactivarUsuario">{% csrf_token %}
+            <input type="hidden" id="modal_codigoUsuario" name="codigoUsuario">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            <button type="submit" class="btn btn-danger">Eliminar Cliente</button>
+        </form> 
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal end -->
+
+<div class="col-md-12">
+
+    <legend>Visualizacion Cliente</legend>
+    
+    <div class="panel-body">
+	    <div class="panel panel-default">
+	    	
+            <div class="profile-right">
+                <!-- begin profile-info -->
+                <div class="profile-info">
+                    <!-- begin table -->
+                    <div class="table-responsive">
+                        <table class="table table-profile">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <h4>{{cliente.razon_social}}
+                                        	<small> 
+
+                                        	</small>
+                                        </h4>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr class="highlight">
+                                    <td class="field">Sigla</td>
+                                    <td> {{cliente.sigla}}  
+                                    </td>
+                                </tr>
+
+                                <tr class="highlight">
+                                    <td class="field">Nit</td></td>
+                                    <td>{{cliente.nit}} </td>
+                                </tr>
+
+                                <tr  class="highlight">
+                                    <td class="field">Ciudad</td>
+                                    <td>{{cliente.ciudad}}</td>
+                                </tr>
+                                
+                                <tr class="highlight">
+                                    <td class="field">Departamento</td>
+                                    <td>{{cliente.departamento}} </td>
+                                </tr>
+
+                                <tr class="highlight">
+                                    <td class="field">Teléfono </td>
+                                    <td>{{cliente.telefono}} </td>
+                                </tr>
+                                
+                                <tr class="highlight">
+                                    <td class="field">Direccion</td>
+                                    <td>{{cliente.direccion}} </td>
+                                </tr>
+                                
+                                <tr class="highlight">
+                                    <td class="field">Tipo de Industria</td>
+                                    <td>{{cliente.tipo}} </td>
+                                </tr>
+								
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- end table -->
+                </div>
+                <!-- end profile-info -->
+                                        
+                        <center>
+	                    	<a onclick="history.back()" id= "generar_pdf" href="javascript:;" class="btn btn-warning m-r-5"> Ir Atras </a>
+                    	</center>
+            </div>
+            <!-- end profile-right -->
+        </div>
+        <!-- end profile-section -->
+						
+			</div>
+        </div>
+	</div>
+</div>
+
+
+
+
+
+{% endblock contenido %}
+
+{% block plugins %}
+		
+
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src = "{% static 'plugins/DataTables/media/js/jquery.dataTables.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/media/js/dataTables.bootstrap.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/jszip.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/pdfmake.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.print.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/AutoFill/js/dataTables.autoFill.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/ColReorder/js/dataTables.colReorder.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/KeyTable/js/dataTables.keyTable.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/RowReorder/js/dataTables.rowReorder.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Select/js/dataTables.select.min.js' %}"></script>
+	<script src = "{% static 'js/table-manage-combine.demo.min.js' %}"></script>
+	<script src = "{% static 'js/apps.min.js' %}"></script>
+	<!-- ================== END PAGE LEVEL JS ================== -->
+
+	<script>
+			$(document).ready(function() {
+				App.init();
+				TableManageCombine.init();
+			});
+	</script>
+
+
+	
+
+{% endblock plugins %}

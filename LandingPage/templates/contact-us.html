@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Contactenos | Solteca S.A.S</title>
+    <link href="{% static 'flat-template/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/prettyPhoto.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/main.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="{% static 'flat-template/images/ico/favicon.ico' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'flat-template/images/ico/apple-touch-icon-144-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'flat-template/images/ico/apple-touch-icon-114-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'flat-template/images/ico/apple-touch-icon-72-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static 'flat-template/images/ico/apple-touch-icon-57-precomposed.png' %}">
+</head><!--/head-->
+<body>
+        <header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'flat-template/images/logo.png' %}" alt="logo"></a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'industria' %}">Industrias</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portafolio <i class="icon-angle-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'portafolio' 1 %}">Lubricantes Industriales</a></li>
+                            <li><a href="{% url 'portafolio' 2 %}">Grasas</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Aditivos</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Soldadura para Antorcha</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Soldadura para Arco</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Soldadura TIG</a></li>
+                            <li><a href="{% url 'portafolio' 7 %}">Quimicos</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Otros</a></li>
+                            <li><a href="{% url 'mostrar_grado_alimenticio' %}">Grado Alimenticio</a></li>
+                            <!--<li class="divider"></li>-->
+                            <!--<li><a href="privacy.html">Privacy Policy</a></li>-->
+                            <!--<li><a href="terms.html">Terms of Use</a></li>-->
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'videos' %}">Videos</a></li>
+                    <li><a href="{% url 'about-us' %}">Acerca de Nosotros</a></li>
+                    <li><a href="{% url 'contact-us' %}">Contacto</a></li>
+                    <li><a href="{% url 'usuario:iniciar_sesion' %}">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </header><!--/header-->
+
+    <section id="title" class="emerald" style="padding: 50px 0">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>Contactenos</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="breadcrumb pull-right">
+                        <li><a href="/">Home</a></li>
+                        <li class="active">Contact Us</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section><!--/#title-->    
+    
+    </br></br>
+    <section id="contact-page" class="container" style="padding: 50px 0">
+        <div class="row">
+            <div class="col-sm-8">
+                <h4>Formulario de Contacto</h4>
+                <div class="status alert alert-success" style="display: none"></div>
+                <form role="form" enctype="multipart/form-data" action="{% url 'contact-us' %}" data-toggle="validator" 
+				method="POST" name="form_crear_categoria" class="form-horizontal">{% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name= "nombre" required="required" placeholder="Nombre">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name= "apellido" required="required" placeholder="Apellido">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="email" required="required" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <button   type="submit" class="btn btn-primary btn-lg" style = "background-color: #0c54a0;">Enviar</button>
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <textarea name="mensaje" id="message" required="required" class="form-control" rows="8" placeholder="Mensaje"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div><!--/.col-sm-8-->
+            <div class="col-sm-4">
+                <h4>Direccion</h4>
+                    <address>
+                        <strong>Soluciones Tecnicas Aplicadas Solteca, S.A.S.</strong><br>
+                        Calle 10 #1B-41, Bloque 1 Oficina 501<br>
+                        Jamundi, Valle del Cauca 764001<br>
+                        <abbr title="Telefono">P:</abbr> (+57) 3225154811<br>
+                        <abbr title="Telefono">P:</abbr> (+2) 592-4494
+                        
+                    </address>
+            </div><!--/.col-sm-4-->
+        </div>
+    </section><!--/#contact-page-->
+    
+    </br></br></br>
+    <!-- Map -->
+    <section id="contact" class="map" style = "height:300px;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.3783283428047!2d-76.53976268543931!3d3.255833353395972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMTUnMjEuMCJOIDc2wrAzMicxNS4zIlc!5e0!3m2!1sfr!2sco!4v1490940926913" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+        <br />
+        <small>
+            <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.3783283428047!2d-76.53976268543931!3d3.255833353395972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMTUnMjEuMCJOIDc2wrAzMicxNS4zIlc!5e0!3m2!1sfr!2sco!4v1490940926913" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></a>
+        </small>
+    </section>
+
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2017 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                </div>
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                       <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'about-us' %}">Nosotros</a></li>
+                        <li><a href="{% url 'contact-us' %}">Contactenos</a></li>
+                        <li><a id="gototop" class="gototop" href="#"><i class="icon-chevron-up"></i></a></li><!--#gototop-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="{% static 'flat-template/js/jquery.js' %}"></script>
+    <script src="{% static 'flat-template/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'flat-template/js/jquery.prettyPhoto.js' %}"></script>
+    <script src="{% static 'flat-template/js/main.js' %}"></script>
+    
+    <script>
+    // Disable Google Maps scrolling
+    // See http://stackoverflow.com/a/25904582/1607849
+    // Disable scroll zooming and bind back the click event
+    var onMapMouseleaveHandler = function(event) {
+        var that = $(this);
+        that.on('click', onMapClickHandler);
+        that.off('mouseleave', onMapMouseleaveHandler);
+        that.find('iframe').css("pointer-events", "none");
+    }
+    var onMapClickHandler = function(event) {
+            var that = $(this);
+            // Disable the click handler until the user leaves the map area
+            that.off('click', onMapClickHandler);
+            // Enable scrolling zoom
+            that.find('iframe').css("pointer-events", "auto");
+            // Handle the mouse leave event
+            that.on('mouseleave', onMapMouseleaveHandler);
+        }
+        // Enable map zooming with mouse scroll when the user clicks the map
+    $('.map').on('click', onMapClickHandler);
+    </script>
+</body>
+</html>

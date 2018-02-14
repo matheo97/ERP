@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Productos | Solteca S.A.S</title>
+    <link href="{% static 'flat-template/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/prettyPhoto.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'flat-template/css/main.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="{% static 'flat-template/images/ico/favicon.ico' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'flat-template/images/ico/apple-touch-icon-144-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'flat-template/images/ico/apple-touch-icon-114-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'flat-template/images/ico/apple-touch-icon-72-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static 'flat-template/images/ico/apple-touch-icon-57-precomposed.png' %}">
+</head><!--/head-->
+<body>
+<header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'flat-template/images/logo.png' %}" alt="logo"></a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'industria' %}">Industrias</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portafolio <i class="icon-angle-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'portafolio' 1 %}">Lubricantes Industriales</a></li>
+                            <li><a href="{% url 'portafolio' 2 %}">Grasas</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Aditivos</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Soldadura para Antorcha</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Soldadura para Arco</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Soldadura TIG</a></li>
+                            <li><a href="{% url 'portafolio' 7 %}">Quimicos</a></li>
+                            <li><a href="{% url 'usuario:coming_soon' %}">Otros</a></li>
+                            <li><a href="{% url 'mostrar_grado_alimenticio' %}">Grado Alimenticio</a></li>
+                            <!--<li class="divider"></li>-->
+                            <!--<li><a href="privacy.html">Privacy Policy</a></li>-->
+                            <!--<li><a href="terms.html">Terms of Use</a></li>-->
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'videos' %}">Videos</a></li>
+                    <li><a href="{% url 'about-us' %}">Acerca de Nosotros</a></li>
+                    <li><a href="{% url 'contact-us' %}">Contacto</a></li>
+                    <li><a href="{% url 'usuario:iniciar_sesion' %}">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </header><!--/header-->
+
+    <section id="title" class="emerald" style="padding: 50px 0";>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>Portafolio</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="breadcrumb pull-right">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li class="active">Portafolio</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section><!--/#title--> 
+    
+    <section id="portafolio" class="container" style="padding: 50px 0">
+        <ul class="portfolio-items col-3">
+            {% for producto in productos %}
+                {% if producto.disponibilidad == "Si" %}
+                    <li class="portfolio-item apps html">
+                        <div class = "blog">
+                            <div class="blog-item c-l-50">
+                                <img class="img-responsive img-blog" src="{% static producto.imagen.url %}" width="100%" alt="" />
+                                <div class="blog-content">
+                                    <a href="blog-item.html"><h3>{{producto.marca}} {{producto.referencia}}</h3></a>
+                                    {% if producto.descripcion|length  <= 55 %}
+                                        <p>{{ producto.descripcion }}</br>.</p>
+                                    {% else %}
+                                        <p>{{ producto.descripcion }}</p>
+                                    {% endif %}
+                                    <br>
+                                    <center><a class="btn btn-default" href="{% static producto.ficha_comercial.url %}">Ficha Comercial</a></center>
+                                </div>
+                            </div>
+                        </div>
+                    </li><!--/.portfolio-item-->
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </section>
+
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2017 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                </div>
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'about-us' %}">Nosotros</a></li>
+                        <li><a href="{% url 'contact-us' %}">Contactenos</a></li>
+                        <li><a id="gototop" class="gototop" href="#"><i class="icon-chevron-up"></i></a></li><!--#gototop-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
+
+    <script src="{% static 'flat-template/js/jquery.js' %}"></script>
+    <script src="{% static 'flat-template/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'flat-template/js/jquery.prettyPhoto.js' %}"></script>
+    <script src="{% static 'flat-template/js/jquery.isotope.min.js' %}"></script>
+    <script src="{% static 'flat-template/js/main.js' %}"></script>
+</body>
+</html>

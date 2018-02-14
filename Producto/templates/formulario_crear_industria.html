@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block css %}
+	<link href="{% static 'assets/plugins/select2/dist/css/select2.min.css' %}" rel="stylesheet" />
+{% endblock css %}
+
+{% block contenido %}
+<!-- ================== END PAGE LEVEL STYLE ================== -->
+
+ <div class="col-md-12">
+     
+    <legend>Crear Industria</legend>
+ 	<br>
+
+    {% if messages %}
+        <ul class="messages">
+		    {% for message in messages %}
+		    <!--<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
+		    <div class="alert alert-danger"> {{ message }} </div>
+		    {% endfor %}
+		</ul>
+    {% endif %}
+                
+	    <div class="panel-body">
+		    <div class="row">
+		    	
+		    	
+			
+				<form role="form" enctype="multipart/form-data" action="{% url 'producto:crear_industria' %}" data-toggle="validator" 
+				method="POST" name="form_crear_categoria" class="form-horizontal">{% csrf_token %}
+				
+					<div class="col-md-9 ui-sortable">
+					    
+					    <div class="form-group">
+                            <label class="col-md-4 control-label">Imagen</label>
+                            <fieldset>
+                              <div >
+                                <div class="row fileupload-buttonbar">
+                                  <div class="col-md-8">
+                                    <span>
+                                        <input type="file" style="position: relative;top:5px;left:15px;" name="imagen" id="imagen" accept="image/*" required>
+                                    </span>                          
+                                  </div>
+                              </div>
+                            </fieldset>
+                        </div>
+			            
+						
+    					<div class="form-group">
+    						<label class="col-md-4 control-label">Nombre</label>
+    						<div class="col-md-8">
+    						    <input type="text" maxlength="50" class="form-control" id="nombre"  name= "nombre" placeholder="Nombre" required>
+    						</div>
+    					</div>
+						
+						
+						<div class="form-group">
+									<label class="control-label col-md-4">Productos</label>
+							<div class="col-md-8">
+							    <select class="multiple-select2 form-control js-example-basic-multiple" multiple="" tabindex="-1" aria-hidden="true" id="productos"  name= "productos">
+							        
+							        {% if lubricantes_industriales %}
+							            <optgroup label="Lubricantes Industriales">
+							            {% for producto in lubricantes_industriales %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if grasas %}
+							            <optgroup label="Grasas">
+							            {% for producto in grasas %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if aditivos %}
+							            <optgroup label="Aditivos">
+							            {% for producto in aditivos %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if soldadura_antorcha %}
+							            <optgroup label="Soldadura para Antorcha">
+							            {% for producto in soldadura_antorcha %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if soldadura_arco %}
+							            <optgroup label="Soldadura para Arco">
+							            {% for producto in soldadura_arco %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if soldadura_tig %}
+							            <optgroup label="Soldadura TIG">
+							            {% for producto in soldadura_tig %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if quimicos %}
+							            <optgroup label="Quimicos">
+							            {% for producto in quimicos %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                    {% if otros %}
+							            <optgroup label="Otros">
+							            {% for producto in otros %}
+                                            <option value="{{producto.referencia}}">{{producto.marca}} {{producto.referencia}}</option>
+                                        {% endfor %}
+                                        </optgroup>
+                                    {% endif %}
+                                    
+                                </select>
+							</div>
+						</div>
+						
+						<br><br>
+			        	<div class="form-group">
+                        <div class="col-md-8 col-md-offset-7">
+                            <button type="submit" class="btn btn-primary">Crear Industria</button>
+                        </div>
+					</div>
+				</form>
+	
+			</div>
+		</div>
+	</div>
+	
+	
+    
+
+</div>
+
+{% endblock contenido %}
+
+{% block plugins %}
+    
+    <script src="{% static 'assets/plugins/select2/dist/js/select2.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/select2/dist/js/i18n/es.js' %}"></script>
+
+	<script>
+			$(document).ready(function() {
+				
+				App.init();
+
+			});
+	</script>
+	
+	<script type="text/javascript">
+			$(".js-example-basic-multiple").select2();
+	</script>
+
+{% endblock plugins %}

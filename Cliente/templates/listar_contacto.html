@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block extrahead %}
+		<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+	<link href="{% static 'plugins/DataTables/media/css/dataTables.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Buttons/css/buttons.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/AutoFill/css/autoFill.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/ColReorder/css/colReorder.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/KeyTable/css/keyTable.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/RowReorder/css/rowReorder.bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'plugins/DataTables/extensions/Select/css/select.bootstrap.min.css' %}" rel="stylesheet" />
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+	
+	<!--<script src = "{% static 'plugins/DataTables/media/js/jquery.dataTables.js' %}"></script>-->
+	<!--<script src="{% static 'plugins/jquery/jquery-1.9.1.min.js' %}"></script>-->
+
+	<!-- ================== END PAGE LEVEL STYLE ================== -->
+	
+
+{% endblock extrahead %}
+
+{% block contenido %}
+
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="{% static 'js/eliminar-contacto.js' %}"></script> 
+
+<script>
+
+		
+	$(document).ready(function(){
+		"use strict";
+	});
+</script>
+
+<!--final de las funcionalidades con JS-->
+	
+   <div class="col-md-12">
+
+    
+    {% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+			<li{% if message.tags %} class="alert alert-success"{% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+       
+    <div class="panel-body">
+    	
+    <!--Contenido encargado de las funcionalidades JS-->
+
+
+
+<!--Contenido encargado de las funcionalidades JS-->
+	        
+    <div class="panel panel-default">
+    <div class="panel-body">
+    	
+    	<legend>Listado de Contactos {{cliente.razon_social}}</legend>
+	    <br>
+	    	
+ 		<div class="row">
+ 			
+ 			
+	        
+            <div class="row" style = "position: relative;left: 20px;">
+            	<a href="{% url 'cliente:listar_clientes' %}" class="btn btn-warning m-r-5"><i class="fa fa-arrow-left"></i> Ir Atras</a>
+            	<a href="{% url 'cliente:crear_contacto' cliente.nit %}" class="btn btn-success m-r-5"><i class="fa fa-address-book"></i> Crear Contacto</a>
+        	</div>
+        	
+        	</br></br>
+            <div id="generar_tabla_usuarios"></div>
+            
+        
+            <table id="data-table" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cargo</th>
+                        <th>Correo</th>
+                        <th>Celular</th>
+                        <th>Telefono</th>
+                        <th>Ext</th>
+                        <th></th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contacto in posts %}
+	                    <tr>
+	                    	<td>
+	                    		{{contacto.nombre}} 
+                            </td>
+                            
+	                        <td>
+	                        	{{contacto.cargo}}
+                            </td>
+                            
+	                        <td>
+								{{contacto.correo_electronico}}
+	                        </td>
+	                        
+	                        <td>
+								{{contacto.celular}}
+	                        </td>
+	                        
+	                        <td>
+								{{contacto.telefono}}
+	                        </td>
+	                        
+	                        <td>
+								{{contacto.extension}}
+	                        </td>
+	                        
+	                         <td>
+	                        	<a class="btn btn-primary" href="{% url 'cliente:modificar_contacto' contacto.id %}">Editar</a>
+	                        	<a class="btn btn-warning" href="{% url 'cliente:carrito_contacto' contacto.id %}">Agregar a Carrito</a>
+	                         </td>
+	                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="email-footer clearfix">
+                  <ul class="pagination pagination-sm m-t-0 m-b-0 pull-right">
+                    {% if paginator.has_prev %}
+                      <li><a href="?page={{ paginator.firstPage }}"><i class="fa fa-angle-double-left"></i></a></li>
+                      <li><a href="?page={{ paginator.prev_page }}"><i class="fa fa-angle-left"></i></a></li>
+                    {% else %}
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-left"></i></a></li>
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-left"></i></a></li>
+                    {% endif %}
+                    {% if paginator.has_next %}
+                      <li><a href="?page={{ paginator.next_page }}"><i class="fa fa-angle-right"></i></a></li>
+                      <li><a href="?page={{ paginator.pages }}"><i class="fa fa-angle-double-right"></i></a></li>
+                    {% else %}
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-right"></i></a></li>
+                      <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-right"></i></a></li>
+                    {% endif %}
+                  </ul>
+                  
+                  Página <{{paginator.page}} de {{paginator.pages}}>
+              </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+    $(document).ready(function() {
+    	
+    	App.init();
+    
+    
+    });
+</script>
+
+{% endblock contenido %}
+
+{% block plugins %}
+		
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	
+	<script src = "{% static 'plugins/DataTables/media/js/dataTables.bootstrap.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/jszip.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/pdfmake.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Buttons/js/buttons.print.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/AutoFill/js/dataTables.autoFill.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/ColReorder/js/dataTables.colReorder.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/KeyTable/js/dataTables.keyTable.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/RowReorder/js/dataTables.rowReorder.min.js' %}"></script>
+	<script src = "{% static 'plugins/DataTables/extensions/Select/js/dataTables.select.min.js' %}"></script>
+	<script src = "{% static 'js/table-manage-combine.demo.min.js' %}"></script>
+	
+	
+	<!-- ================== END PAGE LEVEL JS ================== -->
+
+
+
+{% endblock plugins %}
