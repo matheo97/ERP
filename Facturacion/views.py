@@ -43,7 +43,8 @@ def guardar_datos_demanda(dia, mes, ano, presentacion_id, cantidad):
     else:
         periodo = 3
         
-    referencia_actual = str(periodo) + "-" + str(ano)
+    #referencia_actual = str(periodo) + "-" + str(ano)
+    referencia_actual = "1-2017"
     
     if periodo <= 2:
         periodo = periodo + 1
@@ -52,7 +53,8 @@ def guardar_datos_demanda(dia, mes, ano, presentacion_id, cantidad):
         periodo = 1
         ano = int(ano) + 1
         
-    referencia_futura = str(periodo) + "-" + str(ano)
+    #referencia_futura = str(periodo) + "-" + str(ano)
+    referencia_futura = "2-2017"
     
     #Se traen los listados del periodo actual y el futuro, y se calcula los pronosticos
     
@@ -471,7 +473,7 @@ class generarFactura(TemplateView):
             
         factura.save()
         
-        #guardar_datos_demanda(factura.fecha.day, factura.fecha.month, factura.fecha.year, presentacion_id, cantidad)
+        guardar_datos_demanda(factura.fecha.day, factura.fecha.month, factura.fecha.year, presentacion_id, cantidad)
         
         return redirect("facturacion:generarFactura_pdf", id_factura=factura.consecutivo)
         
@@ -752,7 +754,7 @@ class generarFacturadeCotizacion(TemplateView):
             
         factura.save()
         
-        #guardar_datos_demanda(factura.fecha.day, factura.fecha.month, factura.fecha.year, presentacion_id, cantidad)
+        guardar_datos_demanda(factura.fecha.day, factura.fecha.month, factura.fecha.year, presentacion_id, cantidad)
         
         return redirect("facturacion:generarFactura_pdf", id_factura=factura.consecutivo)
 

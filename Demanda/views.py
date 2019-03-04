@@ -429,28 +429,28 @@ def meses_disponibles(self):
         ano = hoy.year
         
         
-        meses_aplicacion = []
+        meses_aplicacion = ["1-2017","5-2017","6-2017"]
         
-        if int(mes) >= 1 and int(mes) <= 4:
-            limite = 9
-            for x in range (int(mes), limite):
-                meses_aplicacion.append(str(x) + "-" + str(ano))
-                
-        elif int(mes) <= 5 and int(mes) <=8:
-            limite = 13
-            for x in range (int(mes), limite):
-                meses_aplicacion.append(str(x) + "-" + str(ano))
-        else:
-            limite = 13
-            
-            for x in range (int(mes), limite):
-                meses_aplicacion.append(str(x) + "-" + str(ano))
-                
-            limite_2 = 5
-            ano_2 = int(ano) + 1
-            
-            for x in range (1, limite_2):
-                meses_aplicacion.append(str(x) + "-" + str(ano_2))
+#        if int(mes) >= 1 and int(mes) <= 4:
+#            limite = 9
+#            for x in range (int(mes), limite):
+#                meses_aplicacion.append(str(x) + "-" + str(ano))
+#                
+#        elif int(mes) <= 5 and int(mes) <=8:
+#            limite = 13
+#            for x in range (int(mes), limite):
+#                meses_aplicacion.append(str(x) + "-" + str(ano))
+#        else:
+#            limite = 13
+#            
+#            for x in range (int(mes), limite):
+#                meses_aplicacion.append(str(x) + "-" + str(ano))
+#                
+#            limite_2 = 5
+#            ano_2 = int(ano) + 1
+#            
+#            for x in range (1, limite_2):
+#                meses_aplicacion.append(str(x) + "-" + str(ano_2))
                 
         return meses_aplicacion    
         
