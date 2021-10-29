@@ -47,9 +47,7 @@ INSTALLED_APPS = [
     'Demanda',
     'Usuario',
     'Facturacion',
-    'bootstrap3',
     'multiselectfield',
-
 ]
 
 MIDDLEWARE_CLASSES = [

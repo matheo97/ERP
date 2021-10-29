@@ -17,7 +17,6 @@ from io import BytesIO
 from reportlab.pdfgen import canvas
 from django.views.generic import View
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import letter, inch, cm
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from Demanda.models import *
 from django.core.paginator import Paginator
@@ -1142,7 +1141,7 @@ class generarCotizacionPDF(View):
         detalles.append(iva)
         detalles.append(total)
         
-        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 4 * cm, 4* cm, 3.5* cm])
+        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * 4, 4 * 4, 4* 4, 3.5* 4])
         detalle_orden.setStyle(TableStyle(
         [
                 
@@ -1306,7 +1305,7 @@ class generarFacturaPDF(View):
         detalles.append(iva)
         detalles.append(total)
         
-        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 4 * cm, 4* cm, 3.5* cm])
+        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * 4, 4 * 4, 4* 4, 3.5* 4])
         detalle_orden.setStyle(TableStyle(
         [
                 
@@ -1470,7 +1469,7 @@ class generarRemisionPDF(View):
         detalles.append(iva)
         detalles.append(total)
         
-        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 4 * cm, 4* cm, 3.5* cm])
+        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * 4, 4 * 4, 4* 4, 3.5* 4])
         detalle_orden.setStyle(TableStyle(
         [
                 
