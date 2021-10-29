@@ -1,0 +1,7 @@
+pip install -r requirements.txt
+
+pip install django-bootstrap3
+pip install django-multiselectfield
+pip install reportlab
+
+python .\manage.py runserver
